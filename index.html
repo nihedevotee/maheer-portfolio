@@ -1,0 +1,164 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Younus Mohammad Maheer — Interactive Developer Portfolio & OS</title>
+  <meta name="description" content="Interactive developer portfolio of Younus Mohammad Maheer: CS Student, Full-Stack Learner, AI/ML Enthusiast, Open Source Explorer. Explore interactive physics, dynamic lighting, and a personal desktop environment." />
+  <meta name="author" content="Younus Mohammad Maheer" />
+  <meta name="theme-color" content="#050608" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Younus Mohammad Maheer — Interactive Portfolio" />
+  <meta property="og:description" content="Discover the dark room, flip the lamp, and explore my interactive developer desktop, projects, and research." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/lamp-hud.css" />
+  <link rel="stylesheet" href="css/desktop.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <!-- Ambient Room Wall Grid -->
+  <div class="room-grid" aria-hidden="true"></div>
+
+  <!-- Main Desktop Workspace (Discovered inside the illuminated room) -->
+  <main class="desktop-workspace">
+    <div class="main-desktop-shell" id="mainDesktopShell">
+      <!-- System Titlebar -->
+      <div class="system-titlebar">
+        <div class="sys-title-left">
+          <span class="sys-dot"></span>
+          <span>MaheerOS v2.4 — Personal Workspace</span>
+        </div>
+        <div class="sys-title-right">
+          <button id="desktopThemeToggle" class="sys-action-btn" title="Toggle Theme">🌙</button>
+          <span id="systemClock">00:00</span>
+        </div>
+      </div>
+
+      <!-- Desktop Shell Body -->
+      <div class="shell-content">
+        <div class="avatar-badge" role="img" aria-label="Rocket Icon">🚀</div>
+        <h1 class="desktop-h1">Younus Mohammad <span>Maheer</span></h1>
+        <p class="desktop-subtitle">CS Student · Full-Stack Learner · AI/ML Enthusiast · Open Source Explorer</p>
+
+        <!-- 12 Interactive Desktop Applications -->
+        <div class="desktop-icons-grid" role="region" aria-label="Desktop Applications">
+          <button class="icon-btn" data-app="about" title="About Me">
+            <div class="icon-box">🧑‍💻</div>
+            <span>about</span>
+          </button>
+          <button class="icon-btn" data-app="projects" title="Projects Explorer">
+            <div class="icon-box">🚀</div>
+            <span>projects</span>
+          </button>
+          <button class="icon-btn" data-app="skills" title="Technical Skills">
+            <div class="icon-box">⚡</div>
+            <span>skills</span>
+          </button>
+          <button class="icon-btn" data-app="experience" title="Experience & Research">
+            <div class="icon-box">💼</div>
+            <span>experience</span>
+          </button>
+          <button class="icon-btn" data-app="education" title="Education & Coursework">
+            <div class="icon-box">🎓</div>
+            <span>education</span>
+          </button>
+          <button class="icon-btn" data-app="github" title="GitHub & Open Source">
+            <div class="icon-box">🐙</div>
+            <span>github</span>
+          </button>
+          <button class="icon-btn" data-app="resume" title="Resume / CV">
+            <div class="icon-box">📄</div>
+            <span>resume</span>
+          </button>
+          <button class="icon-btn" data-app="contact" title="Get in Touch">
+            <div class="icon-box">✉️</div>
+            <span>contact</span>
+          </button>
+          <button class="icon-btn" data-app="achievements" title="Achievements & Awards">
+            <div class="icon-box">🏆</div>
+            <span>honors</span>
+          </button>
+          <button class="icon-btn" data-app="notes" title="Engineering Notes & Blog">
+            <div class="icon-box">📝</div>
+            <span>notes</span>
+          </button>
+          <button class="icon-btn" data-app="building" title="Currently Building">
+            <div class="icon-box">🛠️</div>
+            <span>building</span>
+          </button>
+          <button class="icon-btn" data-app="playground" title="Playground & Secrets">
+            <div class="icon-box">🎯</div>
+            <span>sandbox</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Canvas for Lamp Physics, Volumetric Lighting, Slingshot, and Particles -->
+  <canvas id="mainCanvas" aria-label="Interactive physical room with hanging lamp and slingshot"></canvas>
+
+  <!-- Container for Dynamic Floating Multi-Windows -->
+  <div id="windowContainer"></div>
+
+  <!-- Bottom Dock for Active and Minimized Windows -->
+  <nav class="desktop-dock" id="desktopDock" aria-label="Running Applications Dock"></nav>
+
+  <!-- HUD Layer -->
+  <aside class="hud-layer" aria-label="Room Controls and Telemetry">
+    <!-- Telemetry -->
+    <div class="hud-telemetry">
+      lamp: <b id="hudState">off</b><br />
+      shots: <b id="hudShots">0</b> · hits: <b id="hudHits">0</b> · bulbs: <b id="hudBulbs">0</b>
+    </div>
+
+    <!-- Top Right Controls -->
+    <div class="hud-controls-top">
+      <button id="soundToggleBtn" class="hud-btn" aria-label="Toggle Sound">sound: on</button>
+    </div>
+
+    <!-- Photorealistic Wall Switch -->
+    <div id="wallSwitch" class="wall-switch" role="switch" aria-checked="false" aria-label="Room light switch" tabindex="0">
+      <span class="switch-screw top"></span>
+      <span class="switch-engrave on">ON</span>
+      <div class="switch-slot">
+        <div class="switch-lever"></div>
+      </div>
+      <span class="switch-pilot"></span>
+      <span class="switch-engrave off">OFF</span>
+      <span class="switch-screw bottom"></span>
+    </div>
+
+    <!-- Replace Bulb Floating Action Button -->
+    <button id="replaceBulbBtn" class="replace-bulb-btn" hidden>💡 replace bulb (R)</button>
+
+    <!-- Bottom Guidance & Slingshot Slider Track -->
+    <div class="hud-bottom-bar">
+      <div class="sling-slider-wrap">
+        <span>slingshot track:</span>
+        <input type="range" id="slingSlider" class="sling-slider" min="60" max="600" value="160" aria-label="Slingshot horizontal position" />
+      </div>
+      <div class="hud-hint">
+        flip wall switch · drag slingshot pebble to aim & shoot · swing lamp shade
+      </div>
+    </div>
+  </aside>
+
+  <!-- Application Scripts -->
+  <script src="js/portfolio-data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/lighting.js"></script>
+  <script src="js/desktop.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

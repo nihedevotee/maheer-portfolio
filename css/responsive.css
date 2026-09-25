@@ -1,0 +1,145 @@
+﻿/**
+ * RESPONSIVE & ACCESSIBILITY STYLESHEET
+ * Adapts workstation layout, touch interactions, and window sizing for mobile and tablets.
+ */
+
+@media (max-width: 768px) {
+  .desktop-icons-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .main-desktop-shell {
+    width: 95vw;
+  }
+
+  .app-window {
+    width: 96vw;
+    left: 2vw !important;
+    top: 5vh !important;
+    max-height: 88vh;
+  }
+
+  .project-problem-solution {
+    grid-template-columns: 1fr;
+  }
+
+  .wall-switch {
+    right: 14px;
+    top: 36%;
+    transform: translateY(-50%) scale(0.82);
+    transform-origin: right center;
+  }
+
+  .hud-telemetry {
+    top: 12px;
+    left: 12px;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .hud-controls-top {
+    top: 12px;
+    right: 12px;
+  }
+
+  .hud-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 520px) {
+  .desktop-workspace {
+    padding: 40px 10px 90px;
+  }
+
+  .desktop-icons-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .icon-btn {
+    width: 64px;
+  }
+
+  .icon-box {
+    width: 54px;
+    height: 54px;
+    font-size: 22px;
+    border-radius: 14px;
+  }
+
+  .icon-btn span {
+    font-size: 11px;
+    max-width: 62px;
+  }
+
+  .shell-content {
+    padding: 20px 12px 14px;
+  }
+
+  .avatar-badge {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .desktop-h1 {
+    font-size: 22px;
+  }
+
+  .desktop-subtitle {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .window-body {
+    padding: 16px 18px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .github-features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .playground-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .desktop-workspace {
+    padding: 20px 10px 50px;
+  }
+
+  .main-desktop-shell {
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .desktop-icons-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .wall-switch {
+    top: 50%;
+    transform: translateY(-50%) scale(0.75);
+  }
+
+  .hud-hint {
+    display: none;
+  }
+}
+
+/* Reduced Motion Mode */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

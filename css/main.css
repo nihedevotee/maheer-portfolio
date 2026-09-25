@@ -1,0 +1,97 @@
+﻿/**
+ * MAIN STYLESHEET
+ * Dark atmospheric room, lighting falloff variables, typography, and base resets.
+ */
+
+:root {
+  --bg: #050608;
+  --grid: rgba(255, 255, 255, 0.045);
+  --text: #ece6da;
+  --text-muted: rgba(236, 230, 218, 0.45);
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --heading: "Funnel Display", "Bricolage Grotesque", -apple-system, sans-serif;
+  --body: "Bricolage Grotesque", -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  /* Theme Accents */
+  --amber: #f3c98f;
+  --amber-glow: rgba(243, 201, 143, 0.4);
+  --primary: #3f7bbf;
+  --primary-hover: #5891d4;
+  --dark-panel: #141b24;
+  --dark-panel-border: rgba(255, 255, 255, 0.12);
+  --card-bg: rgba(25, 34, 46, 0.85);
+
+  /* Dynamic light coordinates fed by JS LightingEngine */
+  --light-cx: 50vw;
+  --light-cy: 200px;
+  --light-intensity: 0;
+  --light-angle: 0rad;
+  --light-broken: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--body);
+  color: var(--text);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* Ambient Room Wall Grid */
+.room-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 76px 76px;
+  background-position: center top;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Canvas for Volumetric Light, Lamp, Slingshot, and Particles */
+#mainCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Hidden Utility */
+[hidden] {
+  display: none !important;
+}
+
+/* Subtle scrollbars for window contents */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
