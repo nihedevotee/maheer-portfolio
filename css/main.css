@@ -5,7 +5,6 @@
 
 :root {
   --bg: #050608;
-  --grid: rgba(255, 255, 255, 0.045);
   --text: #ece6da;
   --text-muted: rgba(236, 230, 218, 0.45);
   --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -47,41 +46,49 @@ html, body {
   touch-action: none;
 }
 
-/* Ambient Room Wall Grid */
+/* Ambient Room Wall — rough plaster/stucco surface, no repeating grid */
 .room-grid {
   position: fixed;
   inset: 0;
-  background-image: 
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 76px 76px;
-  background-position: center top;
+  background: #17181b;
   pointer-events: none;
   z-index: 1;
+  overflow: hidden;
 }
 
-/* Uneven plaster-like shading beneath the grid, so the wall reads as a
-   physical surface rather than a flat digital void */
+/* Irregular, organic patches of lighter/darker plaster and worn corners —
+   many overlapping soft blobs at uneven sizes/positions so nothing repeats
+   or reads as a pattern, plus darker shadowed edges top and bottom */
 .room-grid::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -5%;
   background:
-    radial-gradient(ellipse 60% 45% at 16% 10%, rgba(255, 255, 255, 0.03), transparent 60%),
-    radial-gradient(ellipse 55% 42% at 84% 20%, rgba(255, 255, 255, 0.022), transparent 62%),
-    radial-gradient(ellipse 65% 50% at 50% 100%, rgba(0, 0, 0, 0.38), transparent 70%),
-    radial-gradient(ellipse 90% 65% at 50% 0%, rgba(0, 0, 0, 0.22), transparent 62%);
-  mix-blend-mode: soft-light;
+    radial-gradient(ellipse 22% 14% at 12% 8%,  rgba(255,255,255,0.05), transparent 70%),
+    radial-gradient(ellipse 16% 20% at 78% 14%, rgba(255,255,255,0.035), transparent 70%),
+    radial-gradient(ellipse 28% 18% at 34% 46%, rgba(255,255,255,0.03), transparent 72%),
+    radial-gradient(ellipse 18% 24% at 88% 58%, rgba(255,255,255,0.028), transparent 70%),
+    radial-gradient(ellipse 24% 16% at 8% 72%,  rgba(255,255,255,0.032), transparent 72%),
+    radial-gradient(ellipse 20% 26% at 55% 88%, rgba(255,255,255,0.024), transparent 74%),
+    radial-gradient(ellipse 30% 20% at 62% 30%, rgba(0,0,0,0.22), transparent 72%),
+    radial-gradient(ellipse 26% 22% at 20% 62%, rgba(0,0,0,0.18), transparent 74%),
+    radial-gradient(ellipse 100% 40% at 50% 0%,   rgba(0,0,0,0.4), transparent 60%),
+    radial-gradient(ellipse 100% 45% at 50% 100%, rgba(0,0,0,0.5), transparent 62%),
+    radial-gradient(ellipse 70% 90% at 0% 50%,    rgba(0,0,0,0.35), transparent 65%),
+    radial-gradient(ellipse 70% 90% at 100% 50%,  rgba(0,0,0,0.35), transparent 65%);
 }
 
-/* Fine paint/plaster grain */
+/* Fine plaster grain — two turbulence scales layered for a bumpy, sandy
+   relief instead of a smooth digital gradient */
 .room-grid::after {
   content: "";
   position: absolute;
-  inset: 0;
-  opacity: 0.55;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  background-size: 180px 180px;
+  inset: -5%;
+  opacity: 0.85;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n1'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n1)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'><filter id='n2'><feTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='4' seed='23' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n2)'/></svg>");
+  background-size: 260px 260px, 500px 500px;
   mix-blend-mode: overlay;
 }
 
