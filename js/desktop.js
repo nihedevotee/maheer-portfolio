@@ -17,6 +17,7 @@ window.DesktopManager = (function () {
     renderDock();
     updateClock();
     setInterval(updateClock, 1000);
+    loadVisitCounter();
   }
 
   // Update system clock
@@ -352,6 +353,18 @@ window.DesktopManager = (function () {
     win.appendChild(titleBar);
     win.appendChild(body);
 
+    if (appId === "github") {
+      const handle = (window.PORTFOLIO_DATA && window.PORTFOLIO_DATA.profile && window.PORTFOLIO_DATA.profile.handle) || "";
+      if (handle) loadGitHubLiveStats(body, handle);
+    }
+
+    if (appId === "about") {
+      const visitsEl = body.querySelector("#about-visits-count");
+      if (visitsEl && cachedVisitCount !== null) {
+        visitsEl.textContent = cachedVisitCount;
+      }
+    }
+
     // Event listeners for window controls
     titleBar.querySelector('[data-win-action="min"]').addEventListener("click", (e) => {
       e.stopPropagation();
@@ -371,6 +384,92 @@ window.DesktopManager = (function () {
     return win;
   }
 
+  // Cache of the live visit count once fetched, so re-opening the GitHub window
+  // doesn't need to re-fetch (and doesn't count another visit).
+  let cachedVisitCount = null;
+
+  // Fetch live GitHub stats (repos, followers, total stars) and patch them into the
+  // given window's body element. Scoped to `scope` rather than document.getElementById
+  // so it works regardless of DOM-attachment timing.
+  // Falls back silently to the static numbers already in the markup if the API is
+  // unreachable, rate-limited, or blocked (e.g. when testing via a file:// URL instead
+  // of a real server/deployment — browsers block fetch() to external APIs from file://).
+  async function loadGitHubLiveStats(scope, username) {
+    try {
+      const userRes = await fetch(`https://api.github.com/users/${username}`);
+      const remaining = userRes.headers.get("x-ratelimit-remaining");
+
+      if (!userRes.ok) {
+        if (userRes.status === 403 && remaining === "0") {
+          const resetHeader = userRes.headers.get("x-ratelimit-reset");
+          const resetTime = resetHeader ? new Date(Number(resetHeader) * 1000).toLocaleTimeString() : "unknown";
+          throw new Error(
+            `GitHub's unauthenticated rate limit (60 requests/hour per visitor IP) was hit. ` +
+            `It resets at ${resetTime}. This is common while testing repeatedly — real visitors rarely hit it.`
+          );
+        }
+        throw new Error(`GitHub user lookup failed: HTTP ${userRes.status} ${userRes.statusText}`);
+      }
+      const userData = await userRes.json();
+
+      const repoEl = scope.querySelector("#gh-repos-count");
+      const followEl = scope.querySelector("#gh-followers-count");
+      if (repoEl) repoEl.textContent = userData.public_repos;
+      if (followEl) followEl.textContent = userData.followers;
+
+      // Sum stargazers_count across all public repos (paginated, 100 per page)
+      let page = 1;
+      let totalStars = 0;
+      while (true) {
+        const repoRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&page=${page}`);
+        if (!repoRes.ok) throw new Error(`GitHub repo list failed: HTTP ${repoRes.status}`);
+        const repos = await repoRes.json();
+        if (!Array.isArray(repos) || repos.length === 0) break;
+        totalStars += repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+        if (repos.length < 100) break;
+        page += 1;
+      }
+
+      const starsEl = scope.querySelector("#gh-stars-count");
+      if (starsEl) starsEl.textContent = totalStars;
+
+      console.info("[MaheerOS] Live GitHub stats loaded:", {
+        public_repos: userData.public_repos,
+        followers: userData.followers,
+        stars: totalStars
+      });
+    } catch (err) {
+      // This is the one console message to check if numbers look stale/hardcoded.
+      // Most common cause: opening index.html directly as a file:// URL — browsers
+      // block fetch() to external domains from file://. Serve it locally or check
+      // the deployed site instead.
+      console.error("[MaheerOS] GitHub live stats fetch failed — showing fallback numbers instead. Reason:", err);
+    }
+  }
+
+  // Increment + fetch a real visit counter via the free Abacus API (no signup/key needed).
+  // Runs once per page load from init(), so refreshing/reopening the GitHub window
+  // doesn't double-count. Change NAMESPACE if you want to reset the counter to 0.
+  function loadVisitCounter() {
+    const NAMESPACE = "maheeros-nihedevotee-portfolio";
+    const KEY = "visits";
+    fetch(`https://abacus.jasoncameron.dev/hit/${NAMESPACE}/${KEY}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Visit counter failed: HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        cachedVisitCount = data.value;
+        document.querySelectorAll("#gh-visits-count, #about-visits-count").forEach((el) => {
+          el.textContent = cachedVisitCount;
+        });
+        console.info("[MaheerOS] Live visit count:", cachedVisitCount);
+      })
+      .catch((err) => {
+        console.error("[MaheerOS] Visit counter fetch failed. Reason:", err);
+      });
+  }
+
   // Render individual application content
   function renderAppContent(appId) {
     const data = window.PORTFOLIO_DATA || {};
@@ -387,6 +486,9 @@ window.DesktopManager = (function () {
                 <h2>${ab.heading || p.name}</h2>
                 <div class="profile-subtitle">${ab.subheading || p.title}</div>
                 <div class="profile-badge">${p.statusBadge || ""}</div>
+                <div class="profile-badge" id="about-visits-badge" style="margin-top:8px; background:rgba(255,255,255,0.06); color:#fff;">
+                  👁️ Site Visits: <span id="about-visits-count">—</span>
+                </div>
               </div>
             </div>
 
@@ -395,6 +497,13 @@ window.DesktopManager = (function () {
             <div class="about-paragraphs">
               ${(ab.paragraphs || []).map((para) => `<p>${para}</p>`).join("")}
             </div>
+
+            ${ab.personal ? `
+            <h3 style="color:#ffffff; font-weight:700;">${ab.personal.heading}</h3>
+            <div class="about-paragraphs">
+              ${(ab.personal.paragraphs || []).map((para) => `<p>${para}</p>`).join("")}
+            </div>
+            ` : ""}
 
             <h3>Milestones & Journey</h3>
             <div class="timeline-list">
@@ -607,15 +716,15 @@ window.DesktopManager = (function () {
 
             <div class="github-features-grid">
               <div class="gh-tile">
-                <div class="tile-number">29</div>
+                <div class="tile-number" id="gh-repos-count">29</div>
                 <div class="tile-label">Public Repositories</div>
               </div>
               <div class="gh-tile">
-                <div class="tile-number">13</div>
+                <div class="tile-number" id="gh-stars-count">13</div>
                 <div class="tile-label">Stars Earned</div>
               </div>
               <div class="gh-tile">
-                <div class="tile-number">12</div>
+                <div class="tile-number" id="gh-followers-count">12</div>
                 <div class="tile-label">Followers</div>
               </div>
             </div>

@@ -22,23 +22,33 @@ window.PORTFOLIO_DATA = {
   },
 
   about: {
-    heading: "Hello, World! I am Younus Mohammad Maheer.",
-    subheading: "A Computer Science & Engineering student building full-stack web apps and competing in algorithmic programming contests.",
+    heading: "Hellooo assalamualaikum! I am Younus Mohammad Maheer.",
+    subheading: "A Computer Science student of BRAC university trying to learn full stack development and AI ML integration.",
     paragraphs: [
-      "I'm a Computer Science & Engineering undergraduate at BRAC University, currently in my 7th semester with a CGPA of 3.64. I have a strong foundation in problem-solving, data structures, and full-stack web development.",
-      "I'm actively engaged in competitive programming across Codeforces, CodeChef, and LeetCode, which sharpens my algorithmic thinking, while also building and shipping independent web applications — from browser-based creative tools to desktop-style productivity apps and browser extensions.",
-      "Outside of coding, I'm a general member of the BRAC University Chess Club, and I enjoy reading books and problem solving in my free time."
+      "I'm currently in my 7th semester with a CGPA of 3.64. I have a strong foundation in development, problem-solving, data structures, and learning full-stack web development.",
+      "I'm actively engaged doing projects to enhance my skills in deploying real life applications to help people and myself. I used to participate in competitive programming across Codeforces, CodeChef, and LeetCode, which sharpens my problem solving skills.",
+      "Outside of coding, I'm a general member of the BRAC University Chess Club, and I enjoy reading books and play chess in my free time."
     ],
+    personal: {
+      heading: "Personal Me",
+      paragraphs: [
+        "Well, in this beautiful chaos called life, I like to sit down with a cup of tea and a good book. Sometimes it's something deep and meaningful. Sometimes it's 47 brainrot reels in a row, slowly deleting my attention span.",
+        "Sometimes I play chess to relax. Somehow, I end up more stressed than before. Apparently, losing to a lower rated player is a great way to build character.",
+        "Then there's university. Assignments, exams, projects, and that lovely feeling of knowing I should be learning something but instead staring at the ceiling.",
+        "And now AI is here, apparently turning science fiction into a \"coming soon\" section. As a Computer Science student, I sometimes wonder whether I'll be writing software in the future or writing poems because AI took my job.",
+        "But hey, life is not that bad. I've got tea, books, chess, random thoughts, and a questionable amount of optimism. We move. 😭"
+      ]
+    },
     journeyHighlights: [
-      { year: "2023", title: "Completed HSC & SSC (Science)", desc: "Graduated with a GPA of 5.00/5.00 in both, from Birshresto Munshi Abdur Rouf College." },
-      { year: "2023 - Present", title: "B.Sc. in Computer Science & Engineering", desc: "Currently in my 7th semester at BRAC University, CGPA 3.64, focused on full-stack development and problem-solving." },
-      { year: "Present", title: "Competitive Programming & Independent Projects", desc: "Solving problems on Codeforces, CodeChef, and LeetCode, while building and shipping projects like Notebook, Study Rest Clock, and Cursor Trail." }
+      { year: "2023 and 2021", title: "Completed HSC & SSC (Science)", desc: "Graduated with a GPA of 5.00/5.00 in both, from Birshresto Munshi Abdur Rouf College, Dhaka." },
+      { year: "2024 - Present", title: "B.Sc. in Computer Science & Engineering", desc: "Currently in my 7th semester at BRAC University, CGPA 3.64." }
     ],
     currentFocus: [
       "Improving competitive programming rating across Codeforces, CodeChef, and LeetCode",
       "Building and polishing independent projects — a drawing app, a focus timer, and a Chrome extension",
       "Deepening backend skills with PHP & MySQL, and exploring Machine Learning fundamentals",
-      "Preparing for an undergraduate thesis on disease prediction using Machine Learning, planned for Spring 2027"
+      "Preparing for an undergraduate thesis on disease prediction using Machine Learning, planned for Spring 2027",
+      "Trying to reach 2000 rated in chess.com haha lool"
     ],
     interests: [
       "💻 Coding & Software Development",
@@ -112,7 +122,8 @@ window.PORTFOLIO_DATA = {
         "Deployed and publicly accessible on Vercel"
       ],
       learned: "Learned how to work directly with the Canvas 2D API for real-time rendering, and how to integrate the Web Audio API for interactive sound.",
-      github: "https://github.com/nihedevotee/Notebook"
+      github: "https://github.com/nihedevotee/Notebook",
+      demo: "https://notebook-seven-omega.vercel.app"
     },
     {
       id: "study-rest-clock",
@@ -131,14 +142,15 @@ window.PORTFOLIO_DATA = {
         "Installable, Vercel-deployed Progressive Web App"
       ],
       learned: "Learned how to share a single JavaScript core across an Electron app and a PWA, and how to manage always-on-top window behavior.",
-      github: "https://github.com/nihedevotee/study-rest-clock"
+      github: "https://github.com/nihedevotee/study-rest-clock",
+      demo: "https://study-rest-clock.vercel.app"
     },
     {
       id: "cursor-trail",
       name: "Cursor Trail — Chrome Extension",
       tagline: "A Manifest V3 Chrome extension that renders a colorful particle trail following your cursor across the web.",
       icon: "🖱️",
-      status: "Ongoing",
+      status: "Finished",
       badge: "Browser Tools & Creative Coding",
       problem: "Wanted a small, playful way to make everyday browsing feel more alive without slowing pages down.",
       solution: "Built a Manifest V3 Chrome extension that spawns a colorful particle trail behind the cursor on any webpage, plus a caret-tracking effect that spawns particles at the text cursor while typing.",
@@ -151,6 +163,28 @@ window.PORTFOLIO_DATA = {
       ],
       learned: "Learned how Manifest V3 content scripts work, and how to track both pointer and text-caret positions reliably across arbitrary web pages.",
       github: "https://github.com/nihedevotee/cursor-chrome-extension"
+    },
+    {
+      id: "pdf-maker",
+      name: "ImageOrder PDF — Local Image-to-PDF & Reverse Tool",
+      tagline: "Two client-side PDF tools — build a PDF from a stack of images, or reverse an existing PDF's page order — with nothing ever uploaded to a server.",
+      icon: "▣",
+      status: "Live / Deployed",
+      badge: "Privacy-First Web Tools",
+      problem: "Existing PDF utilities require uploading personal files to a third-party server just to reorder or combine images into a PDF.",
+      solution: "Built two fully client-side tools: one that turns a stack of images into a single ordered PDF via drag-to-reorder cards, and another that reverses an existing PDF's page order and optionally recompresses its embedded JPEGs — both running entirely in the browser with jsPDF and pdf-lib.",
+      tech: ["JavaScript", "jsPDF", "pdf-lib", "HTML5 Drag & Drop", "Canvas API"],
+      features: [
+        "Drag-and-drop image uploads with automatic natural-order sorting (1, 2, 3…10, 11)",
+        "Manual drag-to-reorder, sort-by-filename, and reverse-order controls",
+        "Configurable page size, orientation, and image fit (contain/cover) for the generated PDF",
+        "Separate PDF-reversal tool that flips page order without re-uploading each page as an image",
+        "Optional JPEG recompression (via Canvas + pdf-lib) to shrink oversized embedded images",
+        "Zero uploads — every operation runs locally in the browser"
+      ],
+      learned: "Learned how to manipulate PDF internals directly with pdf-lib — walking XObject resources to find and re-encode embedded JPEG streams — and how to keep a fully client-side file pipeline fast using the Canvas API and object URLs.",
+      github: "https://github.com/nihedevotee/pdf-maker",
+      demo: "https://pdf-maker-inky-theta.vercel.app"
     }
   ],
 
@@ -173,34 +207,20 @@ window.PORTFOLIO_DATA = {
       institution: "BRAC University, Dhaka, Bangladesh",
       period: "7th Semester (Ongoing)",
       gpa: "CGPA: 3.64",
-      coursework: [
-        "CSE422 — Artificial Intelligence",
-        "Complex Analysis",
-        "ECO101 — Microeconomics",
-        "BUS201 — Business Communication",
-        "History of Bangladesh"
-      ],
-      highlights: [
-        "General member of the BRAC University Chess Club",
-        "Active in competitive programming on Codeforces, CodeChef, and LeetCode",
-        "Preparing an undergraduate thesis on disease prediction using Machine Learning, planned for Spring 2027"
-      ]
     },
     {
       degree: "Higher Secondary Certificate (HSC), Science",
       institution: "Birshresto Munshi Abdur Rouf College, Dhaka, Bangladesh",
       period: "2023",
       gpa: "GPA: 5.00/5.00",
-      coursework: [],
-      highlights: []
+      group: "Science"
     },
     {
       degree: "Secondary School Certificate (SSC), Science",
       institution: "Birshresto Munshi Abdur Rouf College, Dhaka, Bangladesh",
       period: "2023",
       gpa: "GPA: 5.00/5.00",
-      coursework: [],
-      highlights: []
+      group: "Science"
     }
   ],
 
@@ -231,10 +251,7 @@ window.PORTFOLIO_DATA = {
         project: "Study Rest Clock — Pomodoro-Style Timer",
         detail: "Refining the shared JavaScript core powering both the Electron desktop app and the Vercel-deployed PWA."
       },
-      {
-        project: "Cursor Trail — Chrome Extension",
-        detail: "Extending the Manifest V3 particle-trail extension with more cursor and caret effects."
-      },
+
       {
         project: "Disease Prediction Thesis",
         detail: "Working with a small group on a Machine Learning-based disease prediction project, as part of the undergraduate thesis planned for Spring 2027."
