@@ -89,12 +89,12 @@ window.LightingEngine = (function () {
       const b = toWorld(BULB_LOCAL[0], BULB_LOCAL[1]);
       const reach = Math.max(W, H) * 1.15;
 
-      // Warm conical beam
+      // Neutral conical beam (grayscale, matching reference lighting)
       const grd = gctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, reach);
-      grd.addColorStop(0, `rgba(255, 222, 168, ${I * 0.95})`);
-      grd.addColorStop(0.35, `rgba(255, 204, 142, ${I * 0.82})`);
-      grd.addColorStop(0.7, `rgba(255, 175, 95, ${I * 0.35})`);
-      grd.addColorStop(1, "rgba(255, 175, 95, 0)");
+      grd.addColorStop(0, `rgba(238, 238, 235, ${I * 0.95})`);
+      grd.addColorStop(0.35, `rgba(214, 214, 211, ${I * 0.82})`);
+      grd.addColorStop(0.7, `rgba(150, 150, 149, ${I * 0.35})`);
+      grd.addColorStop(1, "rgba(150, 150, 149, 0)");
 
       gctx.fillStyle = grd;
       gctx.beginPath();
@@ -105,11 +105,11 @@ window.LightingEngine = (function () {
       gctx.closePath();
       gctx.fill();
 
-      // Soft ambient bulb halo
+      // Soft ambient bulb halo (neutral)
       const halo = gctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, 140);
-      halo.addColorStop(0, `rgba(255, 215, 155, ${I * 0.55})`);
-      halo.addColorStop(0.6, `rgba(255, 195, 125, ${I * 0.22})`);
-      halo.addColorStop(1, "rgba(255, 195, 125, 0)");
+      halo.addColorStop(0, `rgba(226, 226, 223, ${I * 0.55})`);
+      halo.addColorStop(0.6, `rgba(196, 196, 193, ${I * 0.22})`);
+      halo.addColorStop(1, "rgba(196, 196, 193, 0)");
       gctx.fillStyle = halo;
       gctx.fillRect(b.x - 140, b.y - 140, 280, 280);
 
@@ -134,7 +134,7 @@ window.LightingEngine = (function () {
     // Blit darkness mask to main canvas
     ctx.drawImage(dark, 0, 0, W, H);
 
-    // Subtle warm bloom over illuminated areas
+    // Subtle neutral bloom over illuminated areas
     if (I > 0.002) {
       ctx.globalCompositeOperation = "lighter";
       ctx.globalAlpha = 0.16;

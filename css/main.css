@@ -50,7 +50,7 @@ html, body {
 .room-grid {
   position: fixed;
   inset: 0;
-  background: #17181b;
+  background: #1a1a1a;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;

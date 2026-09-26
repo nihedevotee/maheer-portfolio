@@ -384,14 +384,19 @@ window.PhysicsEngine = (function () {
     const vn = p.vx * worldN.x + p.vy * worldN.y;
     if (vn >= 0) return false; // already moving away from the shade
 
+    // Capture the original incoming velocity before we alter it below, so the
+    // lamp swings in the direction the ball actually struck from.
+    const impactVx = p.vx;
+    const impactVy = p.vy;
+
     p.vx -= 1.55 * vn * worldN.x;
     p.vy -= 1.55 * vn * worldN.y;
     p.x += worldN.x * 4;
     p.y += worldN.y * 4;
     p.hitT = 0.08;
 
-    // Swing the lamp based on where and how hard it was struck
-    kickLamp(p.x, p.y, p.vx * 0.11, p.vy * 0.11);
+    // Swing the lamp — magnitude and direction driven by the actual impact
+    kickLamp(p.x, p.y, impactVx * 0.14, impactVy * 0.14);
 
     SoundEngine.play("tap", clamp(Math.abs(vn) / 1400, 0.08, 0.9));
     stats.hits++;
@@ -421,6 +426,7 @@ window.PhysicsEngine = (function () {
 
   // Simulation step
   function step(dt, W, H, switchRect) {
+    dt = Math.min(dt, 1 / 30); // guard against lag spikes causing large, tunneling-prone jumps
     // 1. Pendulum harmonic simulation
     let acc = -(G / lamp.len) * Math.sin(lamp.theta) - lamp.omega * 0.32;
     if (grab && grab.type === "lamp") {
@@ -475,14 +481,23 @@ window.PhysicsEngine = (function () {
       p.hitT = Math.max(0, p.hitT - dt);
       if (p.rest > 0) continue;
 
-      p.vy += PEBBLE_G * dt;
-      p.x += p.vx * dt;
-      p.y += p.vy * dt;
-      p.a += p.vx * dt * 0.05;
+      // Sub-step fast-moving pebbles so a single frame's movement can never
+      // skip clean over a thin collision surface (the shade edge, the switch)
+      const speed = Math.hypot(p.vx, p.vy);
+      const maxStepDist = 4; // px — smaller than the pebble radius
+      const steps = Math.max(1, Math.min(8, Math.ceil((speed * dt) / maxStepDist)));
+      const subDt = dt / steps;
 
-      // Collisions — pebble only interacts with the switch and the bulb
-      collideSwitch(p, switchRect);
-      collideLamp(p);
+      for (let s = 0; s < steps; s++) {
+        p.vy += PEBBLE_G * subDt;
+        p.x += p.vx * subDt;
+        p.y += p.vy * subDt;
+        p.a += p.vx * subDt * 0.05;
+
+        // Collisions — pebble only interacts with the switch and the bulb
+        collideSwitch(p, switchRect);
+        collideLamp(p);
+      }
 
       // Floor bounce
       if (p.y > H - PEBBLE_R) {
