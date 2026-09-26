@@ -1,115 +1,94 @@
 ﻿/**
  * PORTFOLIO DATA CONFIGURATION
  * Owner: Younus Mohammad Maheer
- * Tagline: CS Student · Full-Stack Learner · AI/ML Enthusiast · Open Source Explorer
- * 
+ * Tagline: Computer Science & Engineering Student · Full-Stack Developer · Competitive Programmer
+ *
  * Edit this file to easily customize or update any portfolio content!
  */
 
 window.PORTFOLIO_DATA = {
   profile: {
     name: "Younus Mohammad Maheer",
-    title: "CS Student · Full-Stack Learner · AI/ML Enthusiast · Open Source Explorer",
-    handle: "maheer",
+    title: "Computer Science & Engineering Student · Full-Stack Developer · Competitive Programmer",
+    handle: "nihedevotee",
     systemName: "MaheerOS v2.4",
-    email: "younus.maheer.dev@gmail.com",
-    github: "https://github.com/maheer-dev",
-    linkedin: "https://linkedin.com/in/younus-maheer",
-    twitter: "https://x.com/younus_maheer",
-    location: "Global / Open to Remote",
-    statusBadge: "🟢 Open for Internships & Research Collaborations",
-    bioShort: "Computer Science student passionate about architecting resilient software systems, exploring machine learning models, and building open-source developer tools.",
+    email: "younusmohammadmaheer123@gmail.com",
+    github: "https://github.com/nihedevotee",
+    linkedin: "https://linkedin.com/in/younus-mohammadmaheer",
+    location: "Dhaka, Bangladesh",
+    statusBadge: "🟢 Open to Internships & Collaborative Projects",
+    bioShort: "Computer Science & Engineering student at BRAC University with a strong foundation in problem-solving and full-stack development. Active in competitive programming across Codeforces, CodeChef, and LeetCode, with hands-on experience building and shipping independent web applications.",
     avatarEmoji: "🚀"
   },
 
   about: {
     heading: "Hello, World! I am Younus Mohammad Maheer.",
-    subheading: "A curious developer exploring the intersection of full-stack engineering, distributed systems, and machine learning.",
+    subheading: "A Computer Science & Engineering student building full-stack web apps and competing in algorithmic programming contests.",
     paragraphs: [
-      "I am an enthusiastic Computer Science undergraduate with a deep fascination for how software systems function from the low-level logic up to responsive user interfaces. My journey began with simple script automations and has grown into building full-stack platforms and tinkering with machine learning models.",
-      "I believe the best code is readable, maintainable, and solves real human problems. Whether optimizing database queries, building reactive frontends, or experimenting with PyTorch neural nets, I am always looking to push my technical boundaries.",
-      "Outside of active coding, you can find me reading technical papers, contributing to open-source repositories, exploring developer tooling, and sharing knowledge with peers."
+      "I'm a Computer Science & Engineering undergraduate at BRAC University, currently in my 7th semester with a CGPA of 3.64. I have a strong foundation in problem-solving, data structures, and full-stack web development.",
+      "I'm actively engaged in competitive programming across Codeforces, CodeChef, and LeetCode, which sharpens my algorithmic thinking, while also building and shipping independent web applications — from browser-based creative tools to desktop-style productivity apps and browser extensions.",
+      "Outside of coding, I'm a general member of the BRAC University Chess Club, and I enjoy reading books and problem solving in my free time."
     ],
     journeyHighlights: [
-      { year: "2023 - Present", title: "Undergraduate CS Degree", desc: "Focusing on Algorithms, Data Structures, Distributed Systems, and Machine Learning." },
-      { year: "2024", title: "Full-Stack & Cloud Exploration", desc: "Built end-to-end web apps with Next.js, Node.js, PostgreSQL, and deployed on modern cloud infrastructure." },
-      { year: "2025", title: "AI/ML Experiments & Open Source", desc: "Implemented computer vision pipelines, LLM agent workflows, and contributed to developer tooling." }
+      { year: "2023", title: "Completed HSC & SSC (Science)", desc: "Graduated with a GPA of 5.00/5.00 in both, from Birshresto Munshi Abdur Rouf College." },
+      { year: "2023 - Present", title: "B.Sc. in Computer Science & Engineering", desc: "Currently in my 7th semester at BRAC University, CGPA 3.64, focused on full-stack development and problem-solving." },
+      { year: "Present", title: "Competitive Programming & Independent Projects", desc: "Solving problems on Codeforces, CodeChef, and LeetCode, while building and shipping projects like Notebook, Study Rest Clock, and Cursor Trail." }
     ],
     currentFocus: [
-      "Deepening understanding of Transformer architectures & LLM quantization",
-      "Building robust full-stack applications with TypeScript and Go/Python",
-      "Learning system design patterns and low-latency network programming"
+      "Improving competitive programming rating across Codeforces, CodeChef, and LeetCode",
+      "Building and polishing independent projects — a drawing app, a focus timer, and a Chrome extension",
+      "Deepening backend skills with PHP & MySQL, and exploring Machine Learning fundamentals",
+      "Preparing for an undergraduate thesis on disease prediction using Machine Learning, planned for Spring 2027"
     ],
     interests: [
-      "🤖 Machine Learning & Natural Language Processing",
-      "🌐 Full-Stack Web Architecture & Performance",
-      "⚡ Distributed Systems & High-Throughput APIs",
-      "🐧 Linux, Shell Scripting & Developer Productivity",
-      "🕹️ Creative Coding, Physics Simulations & Game Mechanics"
+      "💻 Coding & Software Development",
+      "🧩 Problem Solving & Competitive Programming",
+      "📚 Reading Books",
+      "♟️ Chess"
     ]
   },
 
   skills: {
     categories: [
       {
-        name: "Languages",
-        icon: "💻",
-        items: [
-          { name: "Python", level: "Advanced", desc: "Scripting, AI/ML, FastAPI, NumPy/Pandas" },
-          { name: "JavaScript / TypeScript", level: "Advanced", desc: "Modern ESNext, React, Node.js, strict typing" },
-          { name: "C++", level: "Intermediate", desc: "Data structures, algorithms, memory management" },
-          { name: "C", level: "Intermediate", desc: "Systems programming, pointers, low-level OS concepts" },
-          { name: "SQL", level: "Intermediate", desc: "Relational queries, indexing, joins, migrations" }
-        ]
-      },
-      {
-        name: "Frontend",
+        name: "Frontend Development",
         icon: "🎨",
         items: [
-          { name: "React / Next.js", level: "Proficient", desc: "Hooks, App Router, SSR, Server Components" },
-          { name: "HTML5 / Semantic Web", level: "Advanced", desc: "Accessibility, Canvas 2D, Audio API" },
-          { name: "CSS3 / Modern Layouts", level: "Advanced", desc: "Flexbox/Grid, Animations, Responsive Design" },
-          { name: "TailwindCSS", level: "Proficient", desc: "Design systems, utility-first CSS" }
+          { name: "HTML", level: "Proficient", desc: "Semantic markup and accessible structure" },
+          { name: "CSS", level: "Proficient", desc: "Layout, responsive design, animation" },
+          { name: "JavaScript", level: "Proficient", desc: "DOM manipulation, Canvas rendering, Web Audio API" }
         ]
       },
       {
-        name: "Backend & Systems",
+        name: "Backend Development",
         icon: "⚙️",
         items: [
-          { name: "Node.js / Express", level: "Proficient", desc: "RESTful APIs, middleware, authentication" },
-          { name: "FastAPI / Flask", level: "Proficient", desc: "Python async microservices, Pydantic validation" },
-          { name: "REST & WebSockets", level: "Intermediate", desc: "Real-time bidirectional event streaming" },
-          { name: "Authentication", level: "Intermediate", desc: "JWT, OAuth2, session security" }
+          { name: "PHP", level: "Intermediate", desc: "Server-side scripting and application logic" },
+          { name: "MySQL", level: "Intermediate", desc: "Relational database design and queries" }
         ]
       },
       {
-        name: "Databases & Storage",
-        icon: "🗄️",
-        items: [
-          { name: "PostgreSQL", level: "Intermediate", desc: "Relational modeling, indexing, ACID compliance" },
-          { name: "MongoDB", level: "Intermediate", desc: "Document schema design, aggregation pipelines" },
-          { name: "Redis", level: "Beginner", desc: "In-memory caching and session stores" },
-          { name: "Prisma / ORM", level: "Intermediate", desc: "Type-safe database querying & migrations" }
-        ]
-      },
-      {
-        name: "AI & Machine Learning",
+        name: "Machine Learning",
         icon: "🧠",
         items: [
-          { name: "PyTorch", level: "Intermediate", desc: "Neural networks, tensors, loss functions, training loops" },
-          { name: "Scikit-Learn", level: "Proficient", desc: "Classical ML classification, regression, clustering" },
-          { name: "Transformers / HuggingFace", level: "Intermediate", desc: "Fine-tuning, embeddings, text generation" },
-          { name: "LangChain / LLM Tooling", level: "Intermediate", desc: "RAG architectures, prompt pipelines" }
+          { name: "Machine Learning Fundamentals", level: "Learning", desc: "Core ML concepts, moving toward an undergraduate thesis on disease prediction" }
         ]
       },
       {
-        name: "Tools & DevOps",
-        icon: "🛠️",
+        name: "Competitive Programming",
+        icon: "🏁",
         items: [
-          { name: "Git & GitHub", level: "Advanced", desc: "Branching workflows, PR reviews, CI/CD actions" },
-          { name: "Docker", level: "Intermediate", desc: "Containerization, multi-stage builds, compose" },
-          { name: "Linux / Bash", level: "Proficient", desc: "Vim, shell automation, environment setup" },
-          { name: "Postman", level: "Proficient", desc: "API endpoint testing, mocking" }
+          { name: "Codeforces", level: "Rating 793", desc: "Algorithmic problem solving" },
+          { name: "CodeChef", level: "Rating 1017", desc: "Contest-based problem solving" },
+          { name: "LeetCode", level: "Rating 1473", desc: "Data structures & algorithms practice" }
+        ]
+      },
+      {
+        name: "Languages",
+        icon: "🗣️",
+        items: [
+          { name: "English", level: "Fluent", desc: "Professional working proficiency" },
+          { name: "Bangla", level: "Native", desc: "Native speaker" }
         ]
       }
     ]
@@ -117,226 +96,148 @@ window.PORTFOLIO_DATA = {
 
   projects: [
     {
-      id: "neural-lens",
-      name: "NeuralLens: Smart Document AI",
-      tagline: "Multimodal document intelligence and semantic search engine powered by local embeddings.",
-      icon: "📄",
-      status: "Active / Deployed",
-      badge: "Featured AI Project",
-      problem: "Traditional search engines fail to understand contextual relationships in unstructured technical PDF papers and documentation.",
-      solution: "Engineered a fast RAG (Retrieval-Augmented Generation) pipeline combining lightweight sentence embeddings with vector search and interactive citation highlights.",
-      tech: ["Python", "FastAPI", "PyTorch", "ChromaDB", "React", "TailwindCSS"],
+      id: "notebook",
+      name: "Notebook — Web-Based Drawing Application",
+      tagline: "A browser-based drawing tool with canvas rendering, Web Audio sound synthesis, and PDF export.",
+      icon: "🎨",
+      status: "Ongoing",
+      badge: "Creative Tools & Frontend",
+      problem: "Wanted a lightweight, accessible drawing tool that runs entirely in the browser without needing any install.",
+      solution: "Built a canvas-based drawing tool that renders freehand strokes in real time, synthesizes sound via the Web Audio API, and lets users export their work directly to PDF. Deployed publicly on Vercel.",
+      tech: ["JavaScript", "HTML5 Canvas", "Web Audio API", "Vercel"],
       features: [
-        "Hybrid dense-sparse vector indexing for sub-100ms retrieval",
-        "Interactive document preview with side-by-side snippet citations",
-        "Local inference option running on quantized HuggingFace models",
-        "Exportable summary flashcards and key concept extraction"
+        "Real-time canvas-based freehand drawing",
+        "Interactive sound synthesis via the Web Audio API",
+        "One-click PDF export of drawings",
+        "Deployed and publicly accessible on Vercel"
       ],
-      learned: "Learned deep nuances of chunking strategies, vector embeddings cosine similarity, and streaming response hydration over WebSockets.",
-      github: "https://github.com/maheer-dev/neurallens",
-      demo: "https://neurallens-demo.preview.app"
+      learned: "Learned how to work directly with the Canvas 2D API for real-time rendering, and how to integrate the Web Audio API for interactive sound.",
+      github: "https://github.com/nihedevotee/Notebook"
     },
     {
-      id: "hyper-task",
-      name: "HyperTask: Distributed Job Orchestrator",
-      tagline: "Lightweight distributed task scheduler with real-time telemetry and fault tolerance.",
-      icon: "⚡",
-      status: "Completed",
-      badge: "Systems & Backend",
-      problem: "Heavyweight enterprise job brokers introduce significant overhead and complex setup for small to medium distributed developer workflows.",
-      solution: "Built a concurrent job runner in Go and TypeScript utilizing Redis pub/sub, exponential backoff retries, and a responsive web monitoring dashboard.",
-      tech: ["Node.js / TypeScript", "Go", "Redis", "WebSocket", "Docker"],
+      id: "study-rest-clock",
+      name: "Study Rest Clock — Pomodoro-Style Timer App",
+      tagline: "A chess-clock-style focus timer built to stay visible above every other window while you work.",
+      icon: "⏱️",
+      status: "Ongoing",
+      badge: "Productivity & Desktop Tools",
+      problem: "Identified a gap in existing focus-timer apps: none of them could reliably stay visible above every other application while working.",
+      solution: "Built a chess-clock-style Pomodoro timer with a shared JavaScript core, shipped as both an Electron desktop app and a Vercel-deployed installable PWA.",
+      tech: ["JavaScript", "Electron", "PWA", "Vercel"],
       features: [
-        "Dynamic worker registration with heartbeat health checks",
-        "Configurable concurrency limits and priority queueing",
-        "Live telemetry graphs measuring throughput and failure rates",
-        "CLI client for dispatching jobs directly from shell scripts"
+        "Chess-clock-style focus/rest timing mechanic",
+        "Shared core logic powering both desktop and web versions",
+        "Always-on-top Electron desktop app",
+        "Installable, Vercel-deployed Progressive Web App"
       ],
-      learned: "Mastered distributed lock patterns, race condition mitigation, and high-frequency WebSocket backpressure handling.",
-      github: "https://github.com/maheer-dev/hyper-task",
-      demo: "https://hypertask.preview.app"
+      learned: "Learned how to share a single JavaScript core across an Electron app and a PWA, and how to manage always-on-top window behavior.",
+      github: "https://github.com/nihedevotee/study-rest-clock"
     },
     {
-      id: "dev-canvas",
-      name: "DevCanvas: Interactive Code Visualizer",
-      tagline: "Collaborative whiteboard and algorithm playground for visualizing data structures in real time.",
-      icon: "📊",
-      status: "Active",
-      badge: "Creative Tech & Frontend",
-      problem: "Learning complex data structures (Red-Black Trees, Graph Traversals, Dynamic Programming) is challenging without intuitive step-by-step visual animation.",
-      solution: "Created an interactive HTML5 Canvas visualizer where students step forward/backward through algorithms with real-time call stack inspectability.",
-      tech: ["TypeScript", "Canvas 2D API", "Web Audio API", "Next.js"],
+      id: "cursor-trail",
+      name: "Cursor Trail — Chrome Extension",
+      tagline: "A Manifest V3 Chrome extension that renders a colorful particle trail following your cursor across the web.",
+      icon: "🖱️",
+      status: "Ongoing",
+      badge: "Browser Tools & Creative Coding",
+      problem: "Wanted a small, playful way to make everyday browsing feel more alive without slowing pages down.",
+      solution: "Built a Manifest V3 Chrome extension that spawns a colorful particle trail behind the cursor on any webpage, plus a caret-tracking effect that spawns particles at the text cursor while typing.",
+      tech: ["JavaScript", "Chrome Extensions (Manifest V3)"],
       features: [
-        "Step-by-step timeline scrubber with adjustable animation speed",
-        "Interactive tree and graph builder with draggable nodes",
-        "Synthesized sound cues indicating comparisons, swaps, and insertions",
-        "Export generated algorithm states as GIFs or vector SVGs"
+        "Colorful particle trail following the cursor on any webpage",
+        "Caret-tracking particle effect while typing",
+        "Works across inputs, textareas, and contentEditable fields",
+        "Lightweight Manifest V3 architecture"
       ],
-      learned: "Gained comprehensive expertise in requestAnimationFrame game loops, matrix transforms, and deterministic simulation stepping.",
-      github: "https://github.com/maheer-dev/dev-canvas",
-      demo: "https://devcanvas.preview.app"
-    },
-    {
-      id: "eco-mesh",
-      name: "EcoMesh: IoT Ambient Monitor",
-      tagline: "Microclimate telemetry collector and predictive anomaly detection system.",
-      icon: "🌱",
-      status: "Prototype",
-      badge: "IoT & Analytics",
-      problem: "Environmental sensor monitoring systems often suffer from intermittent connectivity and missing data imputation.",
-      solution: "Developed an edge-friendly ingestion server with time-series data buffering and simple linear Kalman filtering for noisy readings.",
-      tech: ["Python", "FastAPI", "InfluxDB", "Chart.js", "ESP32 C++"],
-      features: [
-        "Offline caching and batch synchronizing when connection recovers",
-        "Dynamic threshold anomaly alerting via webhooks",
-        "Lightweight dashboard displaying real-time humidity, temperature, and AQI",
-        "Statistical outlier detection using rolling standard deviations"
-      ],
-      learned: "Gained practical experience with time-series data storage, edge computing constraints, and sensor communication protocols.",
-      github: "https://github.com/maheer-dev/eco-mesh",
-      demo: "https://ecomesh.preview.app"
+      learned: "Learned how Manifest V3 content scripts work, and how to track both pointer and text-caret positions reliably across arbitrary web pages.",
+      github: "https://github.com/nihedevotee/cursor-chrome-extension"
     }
   ],
 
   experience: [
     {
-      role: "Student Software Developer / Research Assistant",
-      org: "Computer Science Department",
-      period: "2024 - Present",
-      location: "On-Campus / Hybrid",
+      role: "General Member — HR Department",
+      org: "BRAC University Chess Club",
+      period: "Jul 2026 - Present",
+      location: "BRAC University, Dhaka",
       bullets: [
-        "Collaborated with faculty on benchmarking inference latency across open-source LLM architectures on consumer hardware.",
-        "Engineered automated evaluation test harnesses in Python, processing over 10,000 synthetic test cases.",
-        "Assisted junior peers in understanding data structures, algorithm complexity, and version control best practices."
-      ]
-    },
-    {
-      role: "Open Source Contributor",
-      org: "Developer Tooling Ecosystem",
-      period: "2023 - Present",
-      location: "Remote / GitHub",
-      bullets: [
-        "Contributed bug fixes, type improvements, and documentation examples to community libraries in the React and Python ecosystems.",
-        "Participated in Hacktoberfest and open developer forums, refining code review and collaboration skills.",
-        "Authored reusable utility libraries for Canvas drawing and state machines."
-      ]
-    },
-    {
-      role: "Lead Developer (Hackathon Project)",
-      org: "University Tech Sprint",
-      period: "2024",
-      location: "Hackathon Event",
-      bullets: [
-        "Led a team of 4 developers to build a real-time collaborative study aid within a 36-hour sprint.",
-        "Architected the backend REST endpoints and WebSocket room sync logic.",
-        "Presented the working demonstration to judges, winning the Best Technical Architecture award."
+        "Active general member contributing to the HR department of the university's chess club.",
+        "Engages with a community of chess enthusiasts alongside coursework and independent development projects."
       ]
     }
   ],
 
-  education: {
-    degree: "Bachelor of Science in Computer Science",
-    institution: "University Academic Program",
-    period: "2023 - 2027 (Expected)",
-    gpa: "Dean's List / High Standing",
-    coursework: [
-      "Data Structures & Algorithms",
-      "Object-Oriented Programming (C++/Java)",
-      "Database Management Systems & SQL",
-      "Computer Architecture & Organization",
-      "Operating Systems & Concurrency",
-      "Linear Algebra & Discrete Mathematics",
-      "Probability & Statistics for Machine Learning",
-      "Web Technologies & Distributed Systems"
-    ],
-    highlights: [
-      "Active member of the University Computing & Robotics Society",
-      "Regular participant in weekly competitive programming meetups",
-      "Consistently exploring modern extracurricular research in deep learning"
-    ]
-  },
+  education: [
+    {
+      degree: "B.Sc. in Computer Science & Engineering",
+      institution: "BRAC University, Dhaka, Bangladesh",
+      period: "7th Semester (Ongoing)",
+      gpa: "CGPA: 3.64",
+      coursework: [
+        "CSE422 — Artificial Intelligence",
+        "Complex Analysis",
+        "ECO101 — Microeconomics",
+        "BUS201 — Business Communication",
+        "History of Bangladesh"
+      ],
+      highlights: [
+        "General member of the BRAC University Chess Club",
+        "Active in competitive programming on Codeforces, CodeChef, and LeetCode",
+        "Preparing an undergraduate thesis on disease prediction using Machine Learning, planned for Spring 2027"
+      ]
+    },
+    {
+      degree: "Higher Secondary Certificate (HSC), Science",
+      institution: "Birshresto Munshi Abdur Rouf College, Dhaka, Bangladesh",
+      period: "2023",
+      gpa: "GPA: 5.00/5.00",
+      coursework: [],
+      highlights: []
+    },
+    {
+      degree: "Secondary School Certificate (SSC), Science",
+      institution: "Birshresto Munshi Abdur Rouf College, Dhaka, Bangladesh",
+      period: "2023",
+      gpa: "GPA: 5.00/5.00",
+      coursework: [],
+      highlights: []
+    }
+  ],
 
   achievements: [
     {
-      title: "🏆 Best Technical Architecture Award",
-      issuer: "Campus TechSprint Hackathon (2024)",
-      desc: "Awarded for architecting a low-latency, resilient WebSocket communication system for real-time collaborative editing."
+      title: "🏆 Bit Battles — Intra BRAC University Programming Contest",
+      issuer: "BRAC University Computer Club, Aug 2025",
+      desc: "Received a Certificate of Participation for competing in this intra-university programming contest."
     },
     {
-      title: "🥇 Academic Merit Scholar",
-      issuer: "Faculty of Engineering & Computer Science",
-      desc: "Recognized for top academic standing and consistent high performance across foundational computer science courses."
-    },
-    {
-      title: "🌟 Open Source Contributor Milestone",
-      issuer: "GitHub / Community",
-      desc: "Accumulated 100+ commits and authored multiple accepted pull requests across open developer repositories."
-    },
-    {
-      title: "⚡ Competitive Programming Top 15%",
-      issuer: "Codeforces / LeetCode Contests",
-      desc: "Regularly solved algorithmic challenges focusing on graphs, dynamic programming, and greedy algorithms."
+      title: "🔐 NSU Cybernaut — Datathon & Cybersecurity Competition",
+      issuer: "North South University",
+      desc: "Participated in this datathon and cybersecurity competition."
     }
   ],
 
-  notes: [
-    {
-      id: "note-1",
-      title: "Demystifying Attention Mechanisms in 10 Minutes",
-      date: "Aug 2025",
-      tag: "AI / ML",
-      preview: "Why Query, Key, and Value matrices are conceptually identical to database lookups with fuzzy matching.",
-      content: `Attention in deep learning can be understood with a database lookup metaphor:
-- Query (Q): What you are looking for.
-- Key (K): The label / index of every element in the sequence.
-- Value (V): The actual informational payload.
-
-The attention weights are calculated via softmax over normalized dot products:
-Attention(Q, K, V) = softmax(Q · K^T / sqrt(d_k)) · V
-
-This enables every token to dynamically aggregate information from every other token based on contextual relevance.`
-    },
-    {
-      id: "note-2",
-      title: "Why requestAnimationFrame Beats setTimeout for Physics",
-      date: "Jun 2025",
-      tag: "Web Graphics",
-      preview: "Understanding browser refresh synchrony, delta time capping, and accumulator loops for rock-solid 60+ FPS.",
-      content: `Using setTimeout or setInterval for game loops causes micro-stutters because the JavaScript event loop does not synchronize with the display V-Sync.
-
-With requestAnimationFrame:
-1. Compute dt = (now - last) / 1000.
-2. Clamp dt to prevent physics explosions if the browser tab was throttled in the background (e.g. Math.min(dt, 0.05)).
-3. Step through a fixed time accumulator (while acc >= STEP: step(STEP)) for completely deterministic physics simulation!`
-    },
-    {
-      id: "note-3",
-      title: "Building Resilient REST APIs with Node & TypeScript",
-      date: "Apr 2025",
-      tag: "Backend",
-      preview: "Key practices: Zod schema validation, global error boundary middleware, structured JSON logging.",
-      content: `A resilient API should never crash on unexpected payloads:
-- Validate incoming req.body and req.query with strict Zod schemas before touching business logic.
-- Throw custom AppError classes that encapsulate HTTP status codes and user-safe messages.
-- Centralize error handling in an Express error middleware to avoid leaking internal stack traces in production.`
-    }
-  ],
+  notes: [],
 
   currentlyBuilding: {
     status: "🛠️ In Active Development",
     lastUpdated: "Recently",
     items: [
       {
-        project: "Quantized Edge LLM Runner",
-        detail: "Experimenting with ONNX runtime in WebAssembly to execute compact 1B models entirely client-side inside the browser."
+        project: "Notebook — Web-Based Drawing Application",
+        detail: "Polishing the canvas drawing tool, Web Audio sound synthesis, and PDF export, deployed on Vercel."
       },
       {
-        project: "MaheerOS Interactive Portfolio",
-        detail: "Fine-tuning the dynamic lighting shaders and slingshot projectile physics for this personal portfolio website!"
+        project: "Study Rest Clock — Pomodoro-Style Timer",
+        detail: "Refining the shared JavaScript core powering both the Electron desktop app and the Vercel-deployed PWA."
       },
       {
-        project: "Distributed Log Ingestion Engine",
-        detail: "Writing a lightweight append-only commit log in C++ to understand the core storage mechanics of Apache Kafka."
+        project: "Cursor Trail — Chrome Extension",
+        detail: "Extending the Manifest V3 particle-trail extension with more cursor and caret effects."
+      },
+      {
+        project: "Disease Prediction Thesis",
+        detail: "Working with a small group on a Machine Learning-based disease prediction project, as part of the undergraduate thesis planned for Spring 2027."
       }
     ]
   },
@@ -344,10 +245,9 @@ With requestAnimationFrame:
   contact: {
     pitch: "I am always excited to discuss new software projects, internship opportunities, research collaborations, or fascinating tech topics.",
     channels: [
-      { name: "Email", value: "younus.maheer.dev@gmail.com", url: "mailto:younus.maheer.dev@gmail.com", icon: "✉️" },
-      { name: "GitHub", value: "github.com/maheer-dev", url: "https://github.com/maheer-dev", icon: "🐙" },
-      { name: "LinkedIn", value: "linkedin.com/in/younus-maheer", url: "https://linkedin.com/in/younus-maheer", icon: "💼" },
-      { name: "Twitter / X", value: "@younus_maheer", url: "https://x.com/younus_maheer", icon: "🐦" }
+      { name: "Email", value: "younusmohammadmaheer123@gmail.com", url: "mailto:younusmohammadmaheer123@gmail.com", icon: "✉️" },
+      { name: "GitHub", value: "github.com/nihedevotee", url: "https://github.com/nihedevotee", icon: "🐙" },
+      { name: "LinkedIn", value: "linkedin.com/in/younus-mohammadmaheer", url: "https://linkedin.com/in/younus-mohammadmaheer", icon: "💼" }
     ],
     responseTime: "Typically responds within 24 hours"
   }

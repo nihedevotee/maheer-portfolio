@@ -548,7 +548,7 @@ window.DesktopManager = (function () {
       }
 
       case "education": {
-        const edu = data.education || {};
+        const eduList = Array.isArray(data.education) ? data.education : (data.education ? [data.education] : []);
         return `
           <div class="app-section">
             <div class="section-intro">
@@ -556,28 +556,33 @@ window.DesktopManager = (function () {
               <p>Foundations in computational thinking, systems programming, and algorithms.</p>
             </div>
 
-            <div class="edu-card">
-              <div class="edu-header">
-                <div>
-                  <h3>${edu.degree}</h3>
-                  <div class="edu-inst">${edu.institution}</div>
+            ${eduList.map((edu) => `
+              <div class="edu-card">
+                <div class="edu-header">
+                  <div>
+                    <h3>${edu.degree}</h3>
+                    <div class="edu-inst">${edu.institution}</div>
+                  </div>
+                  <div class="edu-period">${edu.period}</div>
                 </div>
-                <div class="edu-period">${edu.period}</div>
+                <div class="edu-gpa">Status: <strong>${edu.gpa}</strong></div>
+
+                ${(edu.coursework && edu.coursework.length) ? `
+                  <hr class="win-hr">
+                  <h4>Relevant Coursework:</h4>
+                  <div class="coursework-grid">
+                    ${edu.coursework.map((c) => `<div class="course-pill">📖 ${c}</div>`).join("")}
+                  </div>
+                ` : ""}
+
+                ${(edu.highlights && edu.highlights.length) ? `
+                  <h4 style="margin-top:20px;">Academic Highlights:</h4>
+                  <ul>
+                    ${edu.highlights.map((h) => `<li>${h}</li>`).join("")}
+                  </ul>
+                ` : ""}
               </div>
-              <div class="edu-gpa">Status: <strong>${edu.gpa}</strong></div>
-
-              <hr class="win-hr">
-
-              <h4>Relevant Coursework:</h4>
-              <div class="coursework-grid">
-                ${(edu.coursework || []).map((c) => `<div class="course-pill">📖 ${c}</div>`).join("")}
-              </div>
-
-              <h4 style="margin-top:20px;">Academic Highlights:</h4>
-              <ul>
-                ${(edu.highlights || []).map((h) => `<li>${h}</li>`).join("")}
-              </ul>
-            </div>
+            `).join("")}
           </div>
         `;
       }
@@ -602,22 +607,22 @@ window.DesktopManager = (function () {
 
             <div class="github-features-grid">
               <div class="gh-tile">
-                <div class="tile-number">100+</div>
-                <div class="tile-label">Commits & Contributions</div>
-              </div>
-              <div class="gh-tile">
-                <div class="tile-number">15+</div>
+                <div class="tile-number">29</div>
                 <div class="tile-label">Public Repositories</div>
               </div>
               <div class="gh-tile">
-                <div class="tile-number">100%</div>
-                <div class="tile-label">Open Source Ethos</div>
+                <div class="tile-number">13</div>
+                <div class="tile-label">Stars Earned</div>
+              </div>
+              <div class="gh-tile">
+                <div class="tile-number">12</div>
+                <div class="tile-label">Followers</div>
               </div>
             </div>
 
             <div class="callout-box">
               <h4>🤝 Open Source Philosophy</h4>
-              <p>I believe transparent, reproducible code is the strongest bedrock for technical learning. Every repository is structured with clear documentation, tests, and modular architecture.</p>
+              <p>I believe transparent, reproducible code is the strongest bedrock for technical learning. Every repository is structured with clear documentation where it counts, and I keep building in the open.</p>
             </div>
           </div>
         `;
@@ -625,6 +630,7 @@ window.DesktopManager = (function () {
 
       case "resume": {
         const p = data.profile || {};
+        const resumeUrl = "assets/Maheer_Resume_ATS.pdf";
         return `
           <div class="app-section">
             <div class="section-intro">
@@ -645,9 +651,14 @@ window.DesktopManager = (function () {
               </div>
 
               <div class="resume-actions">
-                <a href="${p.email ? `mailto:${p.email}?subject=Resume Request - Younus Mohammad Maheer` : '#'}" class="app-btn primary">📩 Request Official PDF Resume</a>
+                <a href="${resumeUrl}" download class="app-btn primary">⬇️ Download Resume (PDF)</a>
+                <a href="${resumeUrl}" target="_blank" rel="noopener" class="app-btn outline">📄 Open in New Tab</a>
                 <button class="app-btn outline" onclick="window.print()">🖨️ Print Portfolio</button>
               </div>
+            </div>
+
+            <div class="resume-embed-wrap">
+              <embed src="${resumeUrl}" type="application/pdf" class="resume-embed" />
             </div>
           </div>
         `;
@@ -720,9 +731,10 @@ window.DesktopManager = (function () {
           <div class="app-section">
             <div class="section-intro">
               <h2>Engineering Notes & Deep Dives</h2>
-              <p>Concise writeups exploring systems, graphics, algorithms, and AI/ML.</p>
+              <p>Concise writeups exploring systems, graphics, algorithms, and development.</p>
             </div>
 
+            ${notes.length ? `
             <div class="notes-container">
               ${notes.map((n) => `
                 <article class="note-card">
@@ -735,6 +747,12 @@ window.DesktopManager = (function () {
                 </article>
               `).join("")}
             </div>
+            ` : `
+            <div class="callout-box">
+              <h4>✍️ Coming Soon</h4>
+              <p>Writeups on projects, competitive programming, and coursework are in the works — check back soon.</p>
+            </div>
+            `}
           </div>
         `;
       }

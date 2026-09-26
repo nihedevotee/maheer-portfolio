@@ -720,6 +720,23 @@
   margin-top: 14px;
 }
 
+/* Resume PDF embed */
+.resume-embed-wrap {
+  margin-top: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 14, 18, 0.6);
+}
+
+.resume-embed {
+  display: block;
+  width: 100%;
+  height: 70vh;
+  min-height: 420px;
+  border: none;
+}
+
 .edu-header {
   display: flex;
   justify-content: space-between;
