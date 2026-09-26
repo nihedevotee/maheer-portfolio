@@ -139,9 +139,9 @@ window.PhysicsEngine = (function () {
     
     // Slingshot base position
     if (sling.x === 0 || sling.x === 160) {
-      sling.x = clamp(W * 0.22, 90, 340);
+      sling.x = clamp(W * 0.22, 110, 300);
     } else {
-      sling.x = clamp(sling.x, 60, W - 60);
+      sling.x = clamp(sling.x, 95, W - 95);
     }
     sling.y = H;
     sling.baseY = H;
@@ -156,7 +156,7 @@ window.PhysicsEngine = (function () {
   }
 
   function setSlingshotX(newX, W) {
-    sling.x = clamp(newX, 60, W - 60);
+    sling.x = clamp(newX, 95, W - 95);
     sling.rest.x = sling.x;
     if (!grab || grab.type !== "pouch") {
       sling.pouch.x = sling.x;
@@ -288,6 +288,12 @@ window.PhysicsEngine = (function () {
   }
 
   // Hit test for user grabbing pointer
+  // Half-width of the lampshade's slanted profile at a given local y,
+  // shared by the grab hit-test and the shade's physical collision surface.
+  function shadeHalfWidth(y) {
+    return 14 + 50 * clamp((y - 12) / 50, 0, 1) + 8;
+  }
+
   function hitTest(x, y, H) {
     // 1. Pouch grab
     if (sling.loaded && Math.hypot(x - sling.pouch.x, y - sling.pouch.y) < 32) {
@@ -301,7 +307,7 @@ window.PhysicsEngine = (function () {
 
     // 3. Lamp shade grab
     const l = toLocal(x, y);
-    const halfW = 14 + 50 * clamp((l.y - 12) / 50, 0, 1) + 8;
+    const halfW = shadeHalfWidth(l.y);
     if (l.y > -8 && l.y < 94 && Math.abs(l.x) < halfW) {
       const tgt = Math.atan2(x - lamp.ax, y - lamp.ay);
       return {
@@ -347,7 +353,52 @@ window.PhysicsEngine = (function () {
     setSwitch(!light.on, true);
   }
 
-  // Pebble collision with lamp bulb only (shade collision removed — pebble passes through)
+  // Pebble collision with the lampshade's outer surface: bounces the pebble
+  // off along the shade's slanted profile and imparts a swing impulse on the
+  // lamp, proportional to how hard and where it was struck.
+  function collideLampShade(p) {
+    const l = toLocal(p.x, p.y);
+    const r = PEBBLE_R;
+
+    // Only the visible conical part of the shade (not the open area below
+    // the rim, where pebbles should be free to fall through to the bulb).
+    if (l.y < 6 || l.y > 64) return false;
+
+    const hw = shadeHalfWidth(l.y);
+    const edgeDist = Math.abs(l.x) - hw;
+    // Close enough to the slanted outer surface to be touching it
+    if (edgeDist < -(r + 2) || edgeDist > r) return false;
+
+    // Local outward normal, derived from the shade profile's actual slope
+    // so the bounce follows the cone's real slant rather than a flat guess.
+    const dy = 0.6;
+    const slope = (shadeHalfWidth(l.y + dy) - shadeHalfWidth(l.y - dy)) / (2 * dy);
+    const side = l.x < 0 ? -1 : 1;
+    let nx = side;
+    let ny = -slope;
+    const nlen = Math.hypot(nx, ny) || 1;
+    nx /= nlen;
+    ny /= nlen;
+
+    const worldN = dirToWorld(nx, ny);
+    const vn = p.vx * worldN.x + p.vy * worldN.y;
+    if (vn >= 0) return false; // already moving away from the shade
+
+    p.vx -= 1.55 * vn * worldN.x;
+    p.vy -= 1.55 * vn * worldN.y;
+    p.x += worldN.x * 4;
+    p.y += worldN.y * 4;
+    p.hitT = 0.08;
+
+    // Swing the lamp based on where and how hard it was struck
+    kickLamp(p.x, p.y, p.vx * 0.11, p.vy * 0.11);
+
+    SoundEngine.play("tap", clamp(Math.abs(vn) / 1400, 0.08, 0.9));
+    stats.hits++;
+    return true;
+  }
+
+  // Pebble collision with the lamp: bulb first, then the shade surface
   function collideLamp(p) {
     if (p.hitT > 0) return;
     const l = toLocal(p.x, p.y);
@@ -363,7 +414,9 @@ window.PhysicsEngine = (function () {
       stats.hits++;
       return;
     }
-    // No shade collision — pebble flies through the shade untouched
+
+    // Hit shade — bounce off and swing the lamp
+    collideLampShade(p);
   }
 
   // Simulation step

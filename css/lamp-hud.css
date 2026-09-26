@@ -62,21 +62,21 @@
   transform: translateY(-1px);
 }
 
-/* Photorealistic Wall Switch */
+/* Photorealistic Wall Switch — flush rocker paddle design */
 .wall-switch {
   position: absolute;
   right: max(24px, 7vw);
   top: 48%;
   transform: translateY(-50%);
-  width: 74px;
-  height: 124px;
-  border-radius: 12px;
-  background: linear-gradient(160deg, #282a2e, #161719 60%, #101112);
+  width: 86px;
+  height: 120px;
+  border-radius: 18px;
+  background: linear-gradient(155deg, #3b3e43, #202226 55%, #161719);
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.7),
-    0 1px 0 rgba(255, 255, 255, 0.04),
-    0 16px 34px rgba(0, 0, 0, 0.75);
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.65),
+    0 1px 0 rgba(255, 255, 255, 0.05),
+    0 18px 38px rgba(0, 0, 0, 0.75);
   cursor: pointer;
   outline: none;
   z-index: 26;
@@ -103,11 +103,11 @@
 .switch-screw {
   position: absolute;
   left: 50%;
-  width: 7px;
-  height: 7px;
-  margin-left: -3.5px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #727477, #2d2e30 70%);
+  background: radial-gradient(circle at 35% 35%, #8a8c8f, #2d2e30 70%);
 }
 
 .switch-screw::after {
@@ -115,51 +115,65 @@
   position: absolute;
   left: 1px;
   right: 1px;
-  top: 3px;
+  top: 2.5px;
   height: 1px;
   background: rgba(0, 0, 0, 0.8);
   transform: rotate(35deg);
 }
 
 .switch-screw.top {
-  top: 10px;
+  top: 8px;
 }
 
 .switch-screw.bottom {
-  bottom: 10px;
+  bottom: 8px;
 }
 
+/* Recessed housing for the paddle */
 .switch-slot {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 26px;
-  height: 52px;
-  margin: -26px 0 0 -13px;
-  border-radius: 5px;
-  background: linear-gradient(#050607, #0c0d0e);
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.95), 0 1px 0 rgba(255, 255, 255, 0.08);
-  perspective: 120px;
+  left: 10px;
+  right: 10px;
+  top: 20px;
+  bottom: 20px;
+  border-radius: 11px;
+  background: linear-gradient(#08090b, #131518);
+  box-shadow: inset 0 2px 7px rgba(0, 0, 0, 0.92), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  perspective: 220px;
+  overflow: hidden;
 }
 
+/* Broad single rocker paddle — press top for off, bottom for on */
 .switch-lever {
   position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 3px;
-  bottom: 3px;
-  border-radius: 3px;
-  transition: transform 0.15s cubic-bezier(0.3, 1.6, 0.5, 1);
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  border-radius: 8px;
+  transition: transform 0.18s cubic-bezier(0.3, 1.6, 0.5, 1), background 0.18s ease;
   transform-origin: 50% 50%;
-  transform: rotateX(-26deg);
-  background: linear-gradient(#9e9c98 0%, #dedad2 38%, #8e8b86 52%, #555350 100%);
-  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.65);
+  transform: rotateX(10deg);
+  background: linear-gradient(180deg, #eae6dd 0%, #bdb8ae 48%, #847f76 52%, #54514b 100%);
+  box-shadow: 0 7px 16px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .wall-switch[aria-checked="false"] .switch-lever {
-  transform: rotateX(26deg);
-  background: linear-gradient(#4d4b48 0%, #85827d 48%, #d2cec6 64%, #999691 100%);
-  box-shadow: 0 -5px 6px rgba(0, 0, 0, 0.65);
+  transform: rotateX(-10deg);
+  background: linear-gradient(180deg, #48453f 0%, #6f6b64 48%, #a9a49b 52%, #d3cec3 100%);
+  box-shadow: 0 -7px 16px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Hairline split across the paddle's rocking axis */
+.switch-slot::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2;
 }
 
 .switch-engrave {
@@ -167,29 +181,32 @@
   left: 0;
   right: 0;
   text-align: center;
-  font: 8px/1 var(--mono);
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.25);
+  font: 7.5px/1 var(--mono);
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.3);
+  z-index: 3;
+  pointer-events: none;
 }
 
 .switch-engrave.on {
-  top: 21px;
+  top: 26px;
 }
 
 .switch-engrave.off {
-  bottom: 21px;
+  bottom: 26px;
 }
 
 .switch-pilot {
   position: absolute;
-  right: 9px;
-  top: 50%;
-  width: 5px;
-  height: 5px;
-  margin-top: -2.5px;
+  left: 50%;
+  bottom: 9px;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #362616;
   transition: background 0.2s, box-shadow 0.2s;
+  z-index: 3;
 }
 
 .wall-switch[aria-checked="true"] .switch-pilot {
