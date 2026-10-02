@@ -35,6 +35,35 @@
   color: rgba(236, 230, 218, 0.85);
 }
 
+/* Top Center Challenge Banner */
+.hud-challenge {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(420px, 46vw);
+  text-align: center;
+  line-height: 1.5;
+  background: rgba(12, 16, 22, 0.7);
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.hud-challenge-title {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+}
+
+.hud-challenge-sub {
+  margin-top: 3px;
+  font-size: 11px;
+  color: rgba(236, 230, 218, 0.6);
+}
+
 /* Top Right Audio & Controls */
 .hud-controls-top {
   position: absolute;
@@ -302,4 +331,8 @@
   background: var(--amber);
   cursor: pointer;
   box-shadow: 0 0 6px rgba(243, 201, 143, 0.6);
+}
+@media (max-width: 768px) {
+  .hud-challenge { top: 64px; max-width: 80vw; font-size: 10px; padding: 6px 10px; }
+  .hud-challenge-sub { font-size: 10px; }
 }

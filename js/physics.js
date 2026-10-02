@@ -24,6 +24,8 @@ window.PhysicsEngine = (function () {
   const PEBBLE_R = 7;
   const MAX_PULL = 145;
   const LAUNCH = 13.0;
+  const LAMP_KICK = 0.5; // how strongly pebble hits push the lamp (was 0.09)
+  const LAMP_DAMP = 0.2; // swing damping (was 0.32) so it keeps swinging longer
 
   // Lamp state
   const lamp = {
@@ -402,7 +404,7 @@ window.PhysicsEngine = (function () {
     const j = -(1 + e) * vn;
     p.vx += j * n.x - 0.05 * (rvx - vn * n.x);
     p.vy += j * n.y - 0.05 * (rvy - vn * n.y);
-    kickLamp(p.x, p.y, -n.x * j * 0.09, -n.y * j * 0.09);
+    kickLamp(p.x, p.y, -n.x * j * LAMP_KICK, -n.y * j * LAMP_KICK);
 
     if (p.hitT <= 0 && -vn > 60) {
       SoundEngine.play("tap", clamp(-vn / 1400, 0.08, 0.9));
@@ -441,7 +443,7 @@ window.PhysicsEngine = (function () {
             stats.hits++;
             if (light.cracks >= GLASS_HITS) {
               popBulb(p.vx, p.vy);
-              kickLamp(p.x, p.y, p.vx * 0.08, p.vy * 0.08);
+              kickLamp(p.x, p.y, p.vx * LAMP_KICK * 0.8, p.vy * LAMP_KICK * 0.8);
               p.vx *= 0.75;
               p.vy *= 0.75;
               return;
@@ -454,7 +456,7 @@ window.PhysicsEngine = (function () {
           const j = -(1 + (impact < 40 ? 0 : 0.35)) * vn;
           p.vx += j * n.x;
           p.vy += j * n.y;
-          kickLamp(p.x, p.y, -n.x * j * 0.09, -n.y * j * 0.09);
+          kickLamp(p.x, p.y, -n.x * j * LAMP_KICK, -n.y * j * LAMP_KICK);
         }
       }
     }
@@ -467,7 +469,7 @@ window.PhysicsEngine = (function () {
     dt = Math.min(dt, 1 / 30); // guard against lag spikes causing large, tunneling-prone jumps
     light.glassT = Math.max(0, light.glassT - dt);
     // 1. Pendulum harmonic simulation
-    let acc = -(G / lamp.len) * Math.sin(lamp.theta) - lamp.omega * 0.32;
+    let acc = -(G / lamp.len) * Math.sin(lamp.theta) - lamp.omega * LAMP_DAMP;
     if (grab && grab.type === "lamp") {
       const tgt = clamp(Math.atan2(mouse.x - lamp.ax, mouse.y - lamp.ay) - grab.offset, -1.25, 1.25);
       acc += (tgt - lamp.theta) * 175 - lamp.omega * 16;
