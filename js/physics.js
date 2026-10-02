@@ -19,6 +19,8 @@ window.PhysicsEngine = (function () {
   const PEBBLE_G = 1550;
   const BULB_LOCAL = [0, 74];
   const BULB_R = 17;
+  const GLASS_R = BULB_R + 7; // protective glass globe
+  const GLASS_HITS = 3;
   const PEBBLE_R = 7;
   const MAX_PULL = 145;
   const LAUNCH = 13.0;
@@ -41,7 +43,10 @@ window.PhysicsEngine = (function () {
     warm: 0,
     popT: 0,
     broken: false,
-    flash: 0
+    flash: 0,
+    cracks: 0,
+    crackPts: [],
+    glassT: 0
   };
 
   // Slingshot state (movable base across screen)
@@ -237,6 +242,8 @@ window.PhysicsEngine = (function () {
   function replaceBulb() {
     if (!light.broken) return;
     light.broken = false;
+    light.cracks = 0;
+    light.crackPts.length = 0;
     light.heat = 0;
     light.popT = 0;
     if (light.on) {
@@ -342,80 +349,123 @@ window.PhysicsEngine = (function () {
     setSwitch(!light.on, true);
   }
 
-  // Pebble collision with the lampshade's outer surface: bounces the pebble
-  // off along the shade's slanted profile and imparts a swing impulse on the
-  // lamp, proportional to how hard and where it was struck.
-  function collideLampShade(p) {
+  // Solid lamp body in local coords: [x1, y1, x2, y2, thickness].
+  // Every part is physical except the bulb, which bursts on touch.
+  function lampSegments() {
+    const segs = [];
+    const T = 3; // shell thickness
+    segs.push([0, -lamp.len, 0, -8, 2]); // cord
+    segs.push([-22, -8, 22, -8, T]); // top cap
+    for (const s of [-1, 1]) {
+      segs.push([s * 22, -8, s * 22, 12, T]); // neck
+      segs.push([s * shadeHalfWidth(12), 12, s * shadeHalfWidth(62), 62, T]); // slanted wall
+      segs.push([s * shadeHalfWidth(62), 62, s * shadeHalfWidth(62), 66, T]); // rim
+    }
+    segs.push([0, 12, 0, 58, 5]); // socket stem
+    return segs;
+  }
+
+  // Pebble vs one solid segment: pushes out, bounces relative to the swinging
+  // surface, and gives the lamp a matching kick.
+  function collideSegment(p, x1, y1, x2, y2, th) {
     const l = toLocal(p.x, p.y);
-    const r = PEBBLE_R;
+    const abx = x2 - x1;
+    const aby = y2 - y1;
+    const t = clamp(((l.x - x1) * abx + (l.y - y1) * aby) / (abx * abx + aby * aby), 0, 1);
+    let dx = l.x - (x1 + abx * t);
+    let dy = l.y - (y1 + aby * t);
+    const d = Math.hypot(dx, dy);
+    const R = PEBBLE_R + th;
+    if (d >= R) return false;
 
-    // Only the visible conical part of the shade (not the open area below
-    // the rim, where pebbles should be free to fall through to the bulb).
-    if (l.y < 6 || l.y > 64) return false;
+    if (d > 1e-4) {
+      dx /= d;
+      dy /= d;
+    } else {
+      const len = Math.hypot(abx, aby) || 1;
+      dx = -aby / len;
+      dy = abx / len;
+    }
+    const n = dirToWorld(dx, dy);
+    p.x += n.x * (R - d);
+    p.y += n.y * (R - d);
 
-    const hw = shadeHalfWidth(l.y);
-    const edgeDist = Math.abs(l.x) - hw;
-    // Close enough to the slanted outer surface to be touching it
-    if (edgeDist < -(r + 2) || edgeDist > r) return false;
+    // Velocity relative to the lamp surface at the contact point
+    const rx = p.x - lamp.ax;
+    const ry = p.y - lamp.ay;
+    const rvx = p.vx - lamp.omega * ry;
+    const rvy = p.vy + lamp.omega * rx;
+    const vn = rvx * n.x + rvy * n.y;
+    if (vn >= 0) return true; // already separating
 
-    // Local outward normal, derived from the shade profile's actual slope
-    // so the bounce follows the cone's real slant rather than a flat guess.
-    const dy = 0.6;
-    const slope = (shadeHalfWidth(l.y + dy) - shadeHalfWidth(l.y - dy)) / (2 * dy);
-    const side = l.x < 0 ? -1 : 1;
-    let nx = side;
-    let ny = -slope;
-    const nlen = Math.hypot(nx, ny) || 1;
-    nx /= nlen;
-    ny /= nlen;
+    const e = -vn < 40 ? 0 : 0.5; // no jitter when resting on the lamp
+    const j = -(1 + e) * vn;
+    p.vx += j * n.x - 0.05 * (rvx - vn * n.x);
+    p.vy += j * n.y - 0.05 * (rvy - vn * n.y);
+    kickLamp(p.x, p.y, -n.x * j * 0.09, -n.y * j * 0.09);
 
-    const worldN = dirToWorld(nx, ny);
-    const vn = p.vx * worldN.x + p.vy * worldN.y;
-    if (vn >= 0) return false; // already moving away from the shade
-
-    // Capture the original incoming velocity before we alter it below, so the
-    // lamp swings in the direction the ball actually struck from.
-    const impactVx = p.vx;
-    const impactVy = p.vy;
-
-    p.vx -= 1.55 * vn * worldN.x;
-    p.vy -= 1.55 * vn * worldN.y;
-    p.x += worldN.x * 4;
-    p.y += worldN.y * 4;
-    p.hitT = 0.08;
-
-    // Swing the lamp — magnitude and direction driven by the actual impact
-    kickLamp(p.x, p.y, impactVx * 0.14, impactVy * 0.14);
-
-    SoundEngine.play("tap", clamp(Math.abs(vn) / 1400, 0.08, 0.9));
-    stats.hits++;
+    if (p.hitT <= 0 && -vn > 60) {
+      SoundEngine.play("tap", clamp(-vn / 1400, 0.08, 0.9));
+      stats.hits++;
+      p.hitT = 0.08;
+    }
     return true;
   }
 
-  // Pebble collision with the lamp: bulb first, then the shade surface
+  // Pebble collision with the lamp: bulb bursts, everything else is solid
   function collideLamp(p) {
-    if (p.hitT > 0) return;
     const l = toLocal(p.x, p.y);
-    const r = PEBBLE_R;
 
-    // Hit bulb
-    if (!light.broken && Math.hypot(l.x - BULB_LOCAL[0], l.y - BULB_LOCAL[1]) < BULB_R + r) {
-      popBulb(p.vx, p.vy);
-      kickLamp(p.x, p.y, p.vx * 0.08, p.vy * 0.08);
-      p.vx *= 0.75;
-      p.vy *= 0.75;
-      p.hitT = 0.08;
-      stats.hits++;
-      return;
+    // Protective glass globe: bounces the pebble, cracks on each hard hit,
+    // and bursts the bulb on the 3rd.
+    if (!light.broken) {
+      const gx = l.x - BULB_LOCAL[0];
+      const gy = l.y - BULB_LOCAL[1];
+      const d = Math.hypot(gx, gy);
+      if (d < GLASS_R + PEBBLE_R) {
+        const ux = d > 1e-4 ? gx / d : 0;
+        const uy = d > 1e-4 ? gy / d : 1;
+        const n = dirToWorld(ux, uy);
+        p.x += n.x * (GLASS_R + PEBBLE_R - d);
+        p.y += n.y * (GLASS_R + PEBBLE_R - d);
+
+        const rx = p.x - lamp.ax;
+        const ry = p.y - lamp.ay;
+        const vn = (p.vx - lamp.omega * ry) * n.x + (p.vy + lamp.omega * rx) * n.y;
+        if (vn < 0) {
+          const impact = -vn;
+          if (impact > 220 && light.glassT <= 0) {
+            light.glassT = 0.25;
+            light.cracks++;
+            light.crackPts.push(Math.atan2(uy, ux));
+            stats.hits++;
+            if (light.cracks >= GLASS_HITS) {
+              popBulb(p.vx, p.vy);
+              kickLamp(p.x, p.y, p.vx * 0.08, p.vy * 0.08);
+              p.vx *= 0.75;
+              p.vy *= 0.75;
+              return;
+            }
+            SoundEngine.play("tap", clamp(impact / 900, 0.3, 1));
+          } else if (impact > 60 && p.hitT <= 0) {
+            SoundEngine.play("tap", clamp(impact / 1400, 0.08, 0.6));
+            p.hitT = 0.08;
+          }
+          const j = -(1 + (impact < 40 ? 0 : 0.35)) * vn;
+          p.vx += j * n.x;
+          p.vy += j * n.y;
+          kickLamp(p.x, p.y, -n.x * j * 0.09, -n.y * j * 0.09);
+        }
+      }
     }
 
-    // Hit shade — bounce off and swing the lamp
-    collideLampShade(p);
+    for (const sg of lampSegments()) collideSegment(p, sg[0], sg[1], sg[2], sg[3], sg[4]);
   }
 
   // Simulation step
   function step(dt, W, H, switchRect) {
     dt = Math.min(dt, 1 / 30); // guard against lag spikes causing large, tunneling-prone jumps
+    light.glassT = Math.max(0, light.glassT - dt);
     // 1. Pendulum harmonic simulation
     let acc = -(G / lamp.len) * Math.sin(lamp.theta) - lamp.omega * 0.32;
     if (grab && grab.type === "lamp") {
@@ -483,7 +533,7 @@ window.PhysicsEngine = (function () {
         p.y += p.vy * subDt;
         p.a += p.vx * subDt * 0.05;
 
-        // Collisions — pebble only interacts with the switch and the bulb
+        // Collisions — switch, bulb (bursts), and the solid lamp body
         collideSwitch(p, switchRect);
         collideLamp(p);
       }
@@ -600,6 +650,7 @@ window.PhysicsEngine = (function () {
     stats,
     BULB_LOCAL,
     BULB_R,
+    GLASS_R,
     PEBBLE_R,
     MAX_PULL,
     LAUNCH,
