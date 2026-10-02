@@ -15,6 +15,7 @@ window.PORTFOLIO_DATA = {
     email: "younusmohammadmaheer123@gmail.com",
     github: "https://github.com/nihedevotee",
     linkedin: "https://linkedin.com/in/younus-mohammadmaheer",
+    facebook: "https://www.facebook.com/younusmohammad.maheer",
     location: "Dhaka, Bangladesh",
     statusBadge: "🟢 Open to Internships & Collaborative Projects",
     bioShort: "Computer Science & Engineering student at BRAC University with a strong foundation in problem-solving and full-stack development. Active in competitive programming across Codeforces, CodeChef, and LeetCode, with hands-on experience building and shipping independent web applications.",
@@ -285,7 +286,8 @@ window.PORTFOLIO_DATA = {
     channels: [
       { name: "Email", value: "younusmohammadmaheer123@gmail.com", url: "mailto:younusmohammadmaheer123@gmail.com", icon: "✉️" },
       { name: "GitHub", value: "github.com/nihedevotee", url: "https://github.com/nihedevotee", icon: "🐙" },
-      { name: "LinkedIn", value: "linkedin.com/in/younus-mohammadmaheer", url: "https://linkedin.com/in/younus-mohammadmaheer", icon: "💼" }
+      { name: "LinkedIn", value: "linkedin.com/in/younus-mohammadmaheer", url: "https://linkedin.com/in/younus-mohammadmaheer", icon: "💼" },
+      { name: "Facebook", value: "facebook.com/younusmohammad.maheer", url: "https://www.facebook.com/younusmohammad.maheer", icon: "📘" }
     ],
     responseTime: "Typically responds within 24 hours"
   }
