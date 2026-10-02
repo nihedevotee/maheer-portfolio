@@ -178,13 +178,6 @@ window.PhysicsEngine = (function () {
       return;
     }
 
-    if (!on) {
-      light.heat += 0.35;
-    } else {
-      light.heat += 1;
-      light.warm = 0.16;
-    }
-
     if (onStateChange) onStateChange();
   }
 
@@ -247,7 +240,6 @@ window.PhysicsEngine = (function () {
     light.heat = 0;
     light.popT = 0;
     if (light.on) {
-      light.warm = 0.2;
       SoundEngine.play("switchOn");
     } else {
       SoundEngine.play("tap", 0.3);
@@ -576,17 +568,7 @@ window.PhysicsEngine = (function () {
 
   // Update bulb & light properties
   function updateLight(dt) {
-    light.heat = Math.max(0, light.heat - dt * 0.35);
     let target = light.on && !light.broken ? 1 : 0;
-
-    if (light.warm > 0) {
-      light.warm -= dt;
-      target *= Math.random() < 0.4 ? 0.15 : 1;
-    }
-
-    if (light.on && light.heat > 2.6 && Math.random() < (light.heat - 2.6) * 0.06) {
-      target *= 0.3;
-    }
 
     if (light.popT > 0) {
       light.popT -= dt;
