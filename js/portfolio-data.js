@@ -23,18 +23,22 @@ window.PORTFOLIO_DATA = {
   },
 
   about: {
-    greeting: "hellooo assalamualaikum! 👋",
     heading: "Younus Mohammad Maheer",
     roleLines: [
       "CSE student at BRAC University",
       "Full-stack learner · AI/ML enthusiast"
     ],
     photo: "assets/profile.png",
-    paragraphs: [
-      "I'm currently in my 8th semester with a CGPA of 3.7. I have a strong foundation in development, problem-solving, data structures, and learning full-stack web development.",
-      "I'm actively engaged doing projects to enhance my skills in deploying real life applications to help people and myself. I used to participate in competitive programming across Codeforces, CodeChef, and LeetCode, which sharpens my problem solving skills.",
-      "Outside of coding, I'm a general member of the BRAC University Chess Club, and I enjoy reading books and play chess in my free time."
+    intro: "hellooo assalamualaikum! I'm Maheer, a CS student at Brac university in 8th semster with cg3.7",
+    bullets: [
+      "i build and ship full-stack web apps (a drawing app, a focus timer, a chrome extension, this portfolio, pdf maker),",
+      "i solved problems on codeforces, codechef, and leetcode,",
+      "i am preparing an ml thesis on disease prediction for spring 2027,",
+      "i play chess...... (not a high rated just 1485 rapid fide rating 😭),",
+      "i am general member of the brac university chess club, and",
+      "read books in my free time (quran, seerah, religious books, comics, thriller, webtoons, everything 😭😂)."
     ],
+    outro: "want to work together? send me an email at <a href=\"mailto:younusmohammadmaheer123@gmail.com\">younusmohammadmaheer123@gmail.com</a>! :)",
     personal: {
       heading: "Personal Me",
       paragraphs: [

@@ -1090,3 +1090,7 @@
   .profile-info .profile-name { font-size: 26px; }
   .profile-badges { justify-content: center; }
 }
+
+.about-bullets { margin: 10px 0 14px; padding-left: 22px; }
+.about-bullets li { margin: 6px 0; line-height: 1.5; }
+.about-paragraphs a { color: var(--amber); }

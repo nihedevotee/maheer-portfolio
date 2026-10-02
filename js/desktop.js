@@ -500,8 +500,11 @@ window.DesktopManager = (function () {
             <hr class="win-hr">
 
             <div class="about-paragraphs">
-              ${ab.greeting ? `<p class="about-greeting">${ab.greeting}</p>` : ""}
-              ${(ab.paragraphs || []).map((para) => `<p>${para}</p>`).join("")}
+              <p>${ab.intro || ""}</p>
+              <ul class="about-bullets">
+                ${(ab.bullets || []).map((b) => `<li>${b}</li>`).join("")}
+              </ul>
+              <p>${ab.outro || ""}</p>
             </div>
 
             ${ab.personal ? `
