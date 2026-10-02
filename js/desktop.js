@@ -482,13 +482,17 @@ window.DesktopManager = (function () {
         return `
           <div class="app-section">
             <div class="profile-header-card">
-              <div class="profile-avatar">${p.avatarEmoji || "🚀"}</div>
+              ${ab.photo
+                ? `<img class="profile-photo" src="${ab.photo}" alt="${p.name}" />`
+                : `<div class="profile-avatar">${p.avatarEmoji || "🚀"}</div>`}
               <div class="profile-info">
-                <h2>${ab.heading || p.name}</h2>
-                <div class="profile-subtitle">${ab.subheading || p.title}</div>
-                <div class="profile-badge">${p.statusBadge || ""}</div>
-                <div class="profile-badge" id="about-visits-badge" style="margin-top:8px; background:rgba(255,255,255,0.06); color:#fff;">
-                  👁️ Site Visits: <span id="about-visits-count">—</span>
+                <h2 class="profile-name">${ab.heading || p.name}</h2>
+                ${(ab.roleLines || [ab.subheading || p.title]).map((l) => `<div class="profile-subtitle">${l}</div>`).join("")}
+                <div class="profile-badges">
+                  <div class="profile-badge">${p.statusBadge || ""}</div>
+                  <div class="profile-badge" id="about-visits-badge" style="background:rgba(255,255,255,0.06); color:#fff;">
+                    👁️ Site Visits: <span id="about-visits-count">—</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -496,6 +500,7 @@ window.DesktopManager = (function () {
             <hr class="win-hr">
 
             <div class="about-paragraphs">
+              ${ab.greeting ? `<p class="about-greeting">${ab.greeting}</p>` : ""}
               ${(ab.paragraphs || []).map((para) => `<p>${para}</p>`).join("")}
             </div>
 

@@ -23,10 +23,15 @@ window.PORTFOLIO_DATA = {
   },
 
   about: {
-    heading: "Hellooo assalamualaikum! I am Younus Mohammad Maheer.",
-    subheading: "A Computer Science student of BRAC university trying to learn full stack development and AI ML integration.",
+    greeting: "hellooo assalamualaikum! 👋",
+    heading: "Younus Mohammad Maheer",
+    roleLines: [
+      "CSE student at BRAC University",
+      "Full-stack learner · AI/ML enthusiast"
+    ],
+    photo: "assets/profile.png",
     paragraphs: [
-      "I'm currently in my 7th semester with a CGPA of 3.64. I have a strong foundation in development, problem-solving, data structures, and learning full-stack web development.",
+      "I'm currently in my 8th semester with a CGPA of 3.7. I have a strong foundation in development, problem-solving, data structures, and learning full-stack web development.",
       "I'm actively engaged doing projects to enhance my skills in deploying real life applications to help people and myself. I used to participate in competitive programming across Codeforces, CodeChef, and LeetCode, which sharpens my problem solving skills.",
       "Outside of coding, I'm a general member of the BRAC University Chess Club, and I enjoy reading books and play chess in my free time."
     ],
@@ -42,7 +47,7 @@ window.PORTFOLIO_DATA = {
     },
     journeyHighlights: [
       { year: "2023 and 2021", title: "Completed HSC & SSC (Science)", desc: "Graduated with a GPA of 5.00/5.00 in both, from Birshresto Munshi Abdur Rouf College, Dhaka." },
-      { year: "2024 - Present", title: "B.Sc. in Computer Science & Engineering", desc: "Currently in my 7th semester at BRAC University, CGPA 3.64." }
+      { year: "2024 - Present", title: "B.Sc. in Computer Science & Engineering", desc: "Currently in my 8th semester at BRAC University, CGPA 3.7." }
     ],
     currentFocus: [
       "Improving competitive programming rating across Codeforces, CodeChef, and LeetCode",
@@ -227,8 +232,8 @@ window.PORTFOLIO_DATA = {
     {
       degree: "B.Sc. in Computer Science & Engineering",
       institution: "BRAC University, Dhaka, Bangladesh",
-      period: "7th Semester (Ongoing)",
-      gpa: "CGPA: 3.64",
+      period: "8th Semester (Ongoing)",
+      gpa: "CGPA: 3.7",
     },
     {
       degree: "Higher Secondary Certificate (HSC), Science",

@@ -1068,3 +1068,25 @@
 .dock-item.is-minimized {
   opacity: 0.6;
 }
+/* About header — photo + big name (Shar-style) */
+.profile-header-card { gap: 24px; padding: 6px 0 4px; }
+.profile-photo {
+  width: 150px; height: 150px; flex: none;
+  border-radius: 50%; object-fit: cover; object-position: 50% 22%;
+  border: 2px solid rgba(243, 201, 143, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.profile-info .profile-name {
+  font-family: var(--heading);
+  font-size: 34px; line-height: 1.1; font-weight: 800;
+  color: #fbe3bd; margin: 0 0 8px;
+}
+.profile-info .profile-subtitle { font-size: 15px; margin: 2px 0; color: rgba(236, 230, 218, 0.85); }
+.profile-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.about-greeting { font-size: 17px; color: var(--amber); }
+@media (max-width: 520px) {
+  .profile-header-card { flex-direction: column; text-align: center; gap: 14px; }
+  .profile-photo { width: 120px; height: 120px; }
+  .profile-info .profile-name { font-size: 26px; }
+  .profile-badges { justify-content: center; }
+}
