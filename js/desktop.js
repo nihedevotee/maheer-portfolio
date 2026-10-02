@@ -740,7 +740,7 @@ window.DesktopManager = (function () {
 
       case "resume": {
         const p = data.profile || {};
-        const resumeUrl = "assets/Maheer_Resume_ATS.pdf";
+        const resumeUrl = "assets/Younus_Mohammad_Maheer_Resume.pdf";
         return `
           <div class="app-section">
             <div class="section-intro">
@@ -763,7 +763,6 @@ window.DesktopManager = (function () {
               <div class="resume-actions">
                 <a href="${resumeUrl}" download class="app-btn primary">⬇️ Download Resume (PDF)</a>
                 <a href="${resumeUrl}" target="_blank" rel="noopener" class="app-btn outline">📄 Open in New Tab</a>
-                <button class="app-btn outline" onclick="window.print()">🖨️ Print Portfolio</button>
               </div>
             </div>
 
