@@ -369,7 +369,7 @@ window.PhysicsEngine = (function () {
 
   // Pebble vs one solid segment: pushes out, bounces relative to the swinging
   // surface, and gives the lamp a matching kick.
-  function collideSegment(p, x1, y1, x2, y2, th) {
+  function collideSegment(p, x1, y1, x2, y2, th, isRope) {
     const l = toLocal(p.x, p.y);
     const abx = x2 - x1;
     const aby = y2 - y1;
@@ -407,7 +407,7 @@ window.PhysicsEngine = (function () {
     kickLamp(p.x, p.y, -n.x * j * LAMP_KICK, -n.y * j * LAMP_KICK);
 
     if (p.hitT <= 0 && -vn > 60) {
-      SoundEngine.play("tap", clamp(-vn / 1400, 0.08, 0.9));
+      SoundEngine.play(isRope ? "ropeHit" : "shadeHit", clamp(-vn / 1000, 0.15, 1));
       stats.hits++;
       p.hitT = 0.08;
     }
@@ -448,7 +448,7 @@ window.PhysicsEngine = (function () {
               p.vy *= 0.75;
               return;
             }
-            SoundEngine.play("tap", clamp(impact / 900, 0.3, 1));
+            SoundEngine.play("glassCrack", clamp(impact / 900, 0.3, 1), light.cracks);
           } else if (impact > 60 && p.hitT <= 0) {
             SoundEngine.play("tap", clamp(impact / 1400, 0.08, 0.6));
             p.hitT = 0.08;
@@ -461,7 +461,11 @@ window.PhysicsEngine = (function () {
       }
     }
 
-    for (const sg of lampSegments()) collideSegment(p, sg[0], sg[1], sg[2], sg[3], sg[4]);
+    const segs = lampSegments();
+    for (let i = 0; i < segs.length; i++) {
+      const sg = segs[i];
+      collideSegment(p, sg[0], sg[1], sg[2], sg[3], sg[4], i === 0); // segment 0 is the cord
+    }
   }
 
   // Simulation step

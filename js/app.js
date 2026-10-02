@@ -22,6 +22,13 @@
   let hitsEl;
   let slingSlider;
 
+  // Challenge: break the bulb with 3 glass hits within 5 shots
+  const CH_HITS = 3, CH_SHOTS = 5;
+  let chBaseShots = 0;      // shots counter for the current 5-shot round
+  let chBulbBaseShots = 0;  // shots fired since this bulb was installed (for the win message)
+  let chWasBroken = false;
+  let chEls = null;
+
   let W = 0, H = 0, DPR = 1;
   let lastTime = performance.now();
   let accT = 0;
@@ -36,6 +43,7 @@
 
     // Start with switch OFF for the dramatic atmospheric reveal!
     PhysicsEngine.setSwitch(false);
+    chReset();
     syncUI();
 
     requestAnimationFrame(loop);
@@ -51,6 +59,53 @@
     bulbsEl = document.getElementById("hudBulbs");
     hitsEl = document.getElementById("hudHits");
     slingSlider = document.getElementById("slingSlider");
+    chEls = {
+      hits: document.getElementById("chHits"),
+      shots: document.getElementById("chShots"),
+      hitsBar: document.getElementById("chHitsBar"),
+      shotsBar: document.getElementById("chShotsBar"),
+      msg: document.getElementById("chMsg")
+    };
+  }
+
+  /* ---------------------------------------------------------------
+   * CHALLENGE
+   * - Shots refill to 0/5 the moment the 5th shot is fired.
+   * - Hits follow the glass: they stay at 1 or 2 across rounds and
+   *   only go back to 0 once the bulb bursts.
+   * --------------------------------------------------------------- */
+  function chReset() {
+    const P = PhysicsEngine;
+    chBaseShots = P.stats.shots;
+    chBulbBaseShots = P.stats.shots;
+    if (chEls && chEls.msg) { chEls.msg.textContent = ""; chEls.msg.className = "hud-challenge-msg"; }
+  }
+
+  function updateChallenge() {
+    if (!chEls || !chEls.hits) return;
+    const P = PhysicsEngine, L = P.light;
+
+    if (chWasBroken && !L.broken) chReset(); // bulb replaced -> fresh start
+    if (!chWasBroken && L.broken) {
+      const total = Math.max(1, P.stats.shots - chBulbBaseShots);
+      chEls.msg.textContent = "Bulb broken in " + total + (total === 1 ? " shot!" : " shots!");
+      chEls.msg.className = "hud-challenge-msg win";
+    }
+    chWasBroken = L.broken;
+
+    // 5th shot fired: shots refill right away (the pebble in flight can still hit)
+    if (!L.broken && P.stats.shots - chBaseShots >= CH_SHOTS) {
+      chBaseShots = P.stats.shots;
+    }
+
+    const shots = Math.max(0, Math.min(CH_SHOTS, P.stats.shots - chBaseShots));
+    // hits = cracks on the glass; back to 0 once the bulb has burst
+    const hits = L.broken ? 0 : Math.max(0, Math.min(CH_HITS, L.cracks));
+
+    chEls.hits.textContent = hits + "/" + CH_HITS;
+    chEls.shots.textContent = shots + "/" + CH_SHOTS;
+    chEls.hitsBar.style.width = (hits / CH_HITS) * 100 + "%";
+    chEls.shotsBar.style.width = (shots / CH_SHOTS) * 100 + "%";
   }
 
   function initEngines() {
@@ -267,6 +322,7 @@
 
     PhysicsEngine.updateWorld(dt, W, H);
     PhysicsEngine.updateLight(dt);
+    updateChallenge();
 
     // Keep slider in sync if slingshot base was dragged
     if (slingSlider && PhysicsEngine.getGrab() && PhysicsEngine.getGrab().type === "slingBase") {

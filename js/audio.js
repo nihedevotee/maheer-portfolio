@@ -66,7 +66,7 @@ window.SoundEngine = (function () {
     o.stop(t + dur + 0.02);
   }
 
-  function play(name, amt = 1) {
+  function play(name, amt = 1, level = 1) {
     const ambient = name === "squeak";
     if (muted || (ambient && (!ac || ac.state !== "running"))) return;
     if (!getAudioContext()) return;
@@ -160,6 +160,45 @@ window.SoundEngine = (function () {
           tone(t, freq, freq * 0.98, 0.35 - idx * 0.08, 0.09 * g, "triangle");
         });
         burst(t, 0.02, "highpass", 3000, 0.4 * g);
+        break;
+      }
+
+      case "shadeHit": {
+        // Pebble hits the metal lampshade: a short ringing clang
+        const g = Math.max(0.2, Math.min(1, amt));
+        const base = 420 + Math.random() * 80;
+        [1, 2.32, 3.67, 5.4].forEach((r, i) => {
+          tone(t, base * r, base * r * 0.985, 0.5 - i * 0.08, (0.2 / (1 + i * 0.6)) * g, "sine");
+        });
+        burst(t, 0.02, "highpass", 2500, 0.35 * g);
+        break;
+      }
+
+      case "ropeHit": {
+        // Pebble hits the lamp cord: dull thwack plus a short string twang
+        const g = Math.max(0.2, Math.min(1, amt));
+        tone(t, 240 + Math.random() * 40, 100, 0.18, 0.32 * g, "sine");
+        tone(t, 540 + Math.random() * 100, 470, 0.3, 0.1 * g, "triangle");
+        burst(t, 0.05, "lowpass", 1400, 0.25 * g);
+        break;
+      }
+
+      case "glassCrack": {
+        // New crack in the glass globe: bright tink + crackle (louder on later cracks)
+        const g = Math.max(0.3, Math.min(1, amt));
+        const lv = Math.max(1, Math.min(3, level));
+        tone(t, 3200 + Math.random() * 800, 2200, 0.14, 0.2 * g, "triangle");
+        const ticks = 5 + lv * 3;
+        for (let i = 0; i < ticks; i++) {
+          burst(
+            t + Math.random() * 0.22,
+            0.008 + Math.random() * 0.014,
+            "bandpass",
+            2500 + Math.random() * 5500,
+            (0.25 + Math.random() * 0.4) * g * (0.8 + lv * 0.15),
+            1.2
+          );
+        }
         break;
       }
 

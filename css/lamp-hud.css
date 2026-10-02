@@ -16,8 +16,9 @@
   pointer-events: auto;
 }
 
-/* Top Left Telemetry */
+/* Top Left Telemetry (hidden) */
 .hud-telemetry {
+  display: none;
   position: absolute;
   top: 18px;
   left: 20px;
@@ -35,26 +36,30 @@
   color: rgba(236, 230, 218, 0.85);
 }
 
-/* Top Center Challenge Banner */
+/* Challenge Banner (top-left) */
 .hud-challenge {
   position: absolute;
   top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: min(420px, 46vw);
+  left: 20px;
+  width: min(400px, 46vw);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   text-align: center;
-  line-height: 1.5;
+  pointer-events: none;
+}
+
+.hud-challenge-box {
   background: rgba(12, 16, 22, 0.7);
   padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px);
-  pointer-events: none;
+  line-height: 1.5;
 }
 
 .hud-challenge-title {
   font-weight: 600;
-  letter-spacing: 0.06em;
   color: var(--amber);
 }
 
@@ -63,6 +68,61 @@
   font-size: 11px;
   color: rgba(236, 230, 218, 0.6);
 }
+
+.hud-challenge-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ch-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ch-row span {
+  width: 84px;
+  text-align: left;
+  font-size: 11px;
+}
+
+.ch-row b {
+  color: rgba(236, 230, 218, 0.9);
+  font-weight: 500;
+}
+
+.ch-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.ch-bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #f3c98f, #ffb45a);
+  box-shadow: 0 0 8px rgba(255, 175, 85, 0.7);
+  transition: width 0.3s ease;
+}
+
+.ch-bar.shots i {
+  background: linear-gradient(90deg, #8fb7f3, #5891d4);
+  box-shadow: 0 0 8px rgba(88, 145, 212, 0.6);
+}
+
+.hud-challenge-msg {
+  font-size: 11px;
+  min-height: 0;
+}
+
+.hud-challenge-msg:empty { display: none; }
+.hud-challenge-msg.win { color: #9be39b; }
+.hud-challenge-msg.fail { color: #f08a7e; }
 
 /* Top Right Audio & Controls */
 .hud-controls-top {
@@ -333,6 +393,6 @@
   box-shadow: 0 0 6px rgba(243, 201, 143, 0.6);
 }
 @media (max-width: 768px) {
-  .hud-challenge { top: 64px; max-width: 80vw; font-size: 10px; padding: 6px 10px; }
+  .hud-challenge { top: 64px; width: 80vw; font-size: 10px; }
   .hud-challenge-sub { font-size: 10px; }
 }

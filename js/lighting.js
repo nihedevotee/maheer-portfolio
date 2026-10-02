@@ -25,7 +25,7 @@ window.LightingEngine = (function () {
 
   // Floating dust motes inside the light cone
   let dustMotes = [];
-  const NUM_MOTES = 36;
+  const NUM_MOTES = 0; // dust is handled by dust.js
 
   function init(mainCanvas) {
     canvas = mainCanvas;
@@ -77,8 +77,8 @@ window.LightingEngine = (function () {
       gctx.filter = "blur(6px)";
 
       const apex = toWorld(0, 2);
-      const rl = toWorld(-62, 62);
-      const rr = toWorld(62, 62);
+      const rl = toWorld(-70, 62);
+      const rr = toWorld(70, 62);
       const far = Math.max(W, H) * 2.6;
 
       const nl = Math.hypot(rl.x - apex.x, rl.y - apex.y);
@@ -150,40 +150,6 @@ window.LightingEngine = (function () {
     document.documentElement.style.setProperty("--light-intensity", I.toFixed(3));
     document.documentElement.style.setProperty("--light-angle", `${lamp.theta}rad`);
     document.documentElement.style.setProperty("--light-broken", light.broken ? "1" : "0");
-  }
-
-  // Draw floating dust particles in the beam
-  function drawDustMotes(physics, dt) {
-    const { light, toWorld, BULB_LOCAL } = physics;
-    const I = clamp(light.I, 0, 1);
-    if (I < 0.05) return;
-
-    const b = toWorld(BULB_LOCAL[0], BULB_LOCAL[1]);
-    ctx.save();
-    ctx.globalCompositeOperation = "lighter";
-
-    for (const m of dustMotes) {
-      m.phase += dt * 1.5;
-      m.x += m.spX * dt;
-      m.y += m.spY * dt;
-      if (m.y > 1) { m.y = 0; m.x = Math.random(); }
-      if (m.x < 0) m.x = 1;
-      if (m.x > 1) m.x = 0;
-
-      // Position centered below the lamp cone
-      const px = b.x + (m.x - 0.5) * (W * 0.75) * (0.3 + m.y * 0.9);
-      const py = b.y + 40 + m.y * (H - b.y - 40);
-
-      const flicker = 0.5 + 0.5 * Math.sin(m.phase);
-      const alpha = m.alpha * flicker * I * (1 - m.y * 0.4);
-
-      ctx.fillStyle = `rgba(255, 235, 200, ${alpha * 0.45})`;
-      ctx.beginPath();
-      ctx.arc(px, py, m.r, 0, TAU);
-      ctx.fill();
-    }
-
-    ctx.restore();
   }
 
   // Draw light bulb and filament
@@ -269,71 +235,115 @@ window.LightingEngine = (function () {
     ctx.fill();
   }
 
-  // Draw the entire hanging lamp
+  // Draw the entire hanging lamp — matte black cone pendant.
+  // Silhouette matches the collision profile in physics.js (neck ±14, flaring to ±72 at y=62).
   function drawLamp(physics) {
     const { lamp, light, lampOrigin, toWorld, BULB_LOCAL } = physics;
     const o = lampOrigin();
     const I = clamp(light.I, 0, 1);
 
-    // Suspension cord
-    ctx.strokeStyle = "#2b2e32";
-    ctx.lineWidth = 2.2;
+    // Matte black metal: soft vertical-edge shading, subtle highlight
+    const brass = (x0, x1) => {
+      const g = ctx.createLinearGradient(x0, 0, x1, 0);
+      g.addColorStop(0, "#050505");
+      g.addColorStop(0.3, "#23242a");
+      g.addColorStop(0.45, "#2e3037");
+      g.addColorStop(0.7, "#121316");
+      g.addColorStop(1, "#050505");
+      return g;
+    };
+
+    // Braided cloth cord
+    const top = toWorld(0, -14);
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#151618";
+    ctx.lineWidth = 3.4;
     ctx.beginPath();
     ctx.moveTo(lamp.ax, lamp.ay);
-    ctx.lineTo(o.x, o.y);
+    ctx.lineTo(top.x, top.y);
     ctx.stroke();
+    ctx.save();
+    ctx.setLineDash([2.5, 3.5]);
+    ctx.strokeStyle = "#51545a";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(lamp.ax, lamp.ay);
+    ctx.lineTo(top.x, top.y);
+    ctx.stroke();
+    ctx.restore();
 
     ctx.save();
     ctx.translate(o.x, o.y);
     ctx.rotate(-lamp.theta);
 
-    // Brass collar
-    const cg = ctx.createLinearGradient(-8, 0, 8, 0);
-    cg.addColorStop(0, "#16181a");
-    cg.addColorStop(0.45, "#4d5158");
-    cg.addColorStop(1, "#121315");
-    ctx.fillStyle = cg;
-    ctx.beginPath();
-    ctx.roundRect(-8, -2, 16, 17, 3);
-    ctx.fill();
+    // Cord grommet + socket housing
+    ctx.fillStyle = brass(-6, 6);
+    ctx.beginPath(); ctx.roundRect(-6, -18, 12, 7, 2); ctx.fill();
+    ctx.fillStyle = brass(-17, 17);
+    ctx.beginPath(); ctx.roundRect(-17, -12, 34, 6, 3); ctx.fill();
+    ctx.fillStyle = brass(-14, 14);
+    ctx.beginPath(); ctx.roundRect(-14, -8, 28, 20, 3); ctx.fill();
 
-    // Exterior metal lampshade
-    const sg = ctx.createLinearGradient(-62, 0, 62, 0);
-    sg.addColorStop(0, "#0c0d0f");
-    sg.addColorStop(0.3, "#282b30");
-    sg.addColorStop(0.42, "#4e5359");
-    sg.addColorStop(0.58, "#25282c");
-    sg.addColorStop(1, "#0a0b0c");
-    ctx.fillStyle = sg;
-    ctx.beginPath();
-    ctx.moveTo(-13, 13);
-    ctx.bezierCurveTo(-28, 15, -56, 34, -62, 62);
-    ctx.lineTo(62, 62);
-    ctx.bezierCurveTo(56, 34, 28, 15, 13, 13);
-    ctx.closePath();
-    ctx.fill();
+    // Cone shade body (outer surface)
+    const shade = new Path2D();
+    shade.moveTo(-14, 12);
+    shade.quadraticCurveTo(-45.6, 34, -72, 62);
+    shade.ellipse(0, 62, 72, 8, 0, Math.PI, 0, true); // front lip curve
+    shade.quadraticCurveTo(45.6, 34, 14, 12);
+    shade.closePath();
+    ctx.fillStyle = brass(-72, 72);
+    ctx.fill(shade);
+
+    // Clean, simple sheen on the shade
+    ctx.save();
+    ctx.clip(shade);
+    const sheen = ctx.createLinearGradient(0, 12, 0, 70);
+    sheen.addColorStop(0, "rgba(255, 255, 255, 0.07)");
+    sheen.addColorStop(1, "rgba(255, 255, 255, 0)");
+    ctx.fillStyle = sheen;
+    ctx.fillRect(-80, 10, 160, 62);
+    if (I > 0.01) { // warm light spilling over the lower shade
+      const wl = ctx.createLinearGradient(0, 40, 0, 70);
+      wl.addColorStop(0, "rgba(255, 190, 110, 0)");
+      wl.addColorStop(1, `rgba(255, 190, 110, ${0.28 * I})`);
+      ctx.fillStyle = wl;
+      ctx.fillRect(-80, 40, 160, 32);
+    }
+    ctx.restore();
 
     ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
     ctx.lineWidth = 1;
-    ctx.stroke();
+    ctx.stroke(shade);
 
-    // Interior warm reflector dish
-    const ug = ctx.createRadialGradient(0, 64, 0, 0, 62, 62);
-    ug.addColorStop(0, rgba(mix([22, 23, 25], [255, 235, 200], I), 1));
-    ug.addColorStop(1, rgba(mix([10, 11, 12], [200, 130, 66], I), 1));
+    // Collar where the cone meets the housing
+    ctx.fillStyle = brass(-16, 16);
+    ctx.beginPath(); ctx.roundRect(-16, 9, 32, 5, 2); ctx.fill();
+
+    // Inner reflector dish (the opening, lit when on)
+    const ug = ctx.createRadialGradient(0, 64, 0, 0, 62, 72);
+    ug.addColorStop(0, rgba(mix([30, 22, 12], [255, 238, 205], I), 1));
+    ug.addColorStop(1, rgba(mix([12, 9, 5], [214, 140, 70], I), 1));
     ctx.fillStyle = ug;
-    ctx.beginPath();
-    ctx.ellipse(0, 62, 62, 7, 0, 0, TAU);
-    ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0, 62, 70, 7, 0, 0, TAU); ctx.fill();
+
+    // Socket
+    ctx.fillStyle = brass(-7, 7);
+    ctx.beginPath(); ctx.roundRect(-7, 52, 14, 11, 2); ctx.fill();
 
     drawBulb(physics, I);
 
-    // Rim highlight
-    ctx.strokeStyle = `rgba(255, 255, 255, ${0.12 + I * 0.22})`;
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.ellipse(0, 62, 62, 7, 0, 0, Math.PI);
-    ctx.stroke();
+    // Brass front lip
+    const lip = ctx.createLinearGradient(-72, 0, 72, 0);
+    lip.addColorStop(0, "#08080a");
+    lip.addColorStop(0.4, "#3a3c44");
+    lip.addColorStop(1, "#08080a");
+    ctx.strokeStyle = lip;
+    ctx.lineWidth = 2.6;
+    ctx.beginPath(); ctx.ellipse(0, 62, 72, 8, 0, 0, Math.PI); ctx.stroke();
+    ctx.strokeStyle = `rgba(255, 220, 170, ${0.06 + I * 0.3})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.ellipse(0, 62, 72, 8, 0, Math.PI, TAU); ctx.stroke();
+
     ctx.restore();
 
     // Immediate bulb flare
@@ -565,7 +575,6 @@ window.LightingEngine = (function () {
     ctx.clearRect(0, 0, W, H);
 
     renderLight(physics);
-    drawDustMotes(physics, dt);
     drawLamp(physics);
     drawSlingshot(physics);
     drawParticles(physics);

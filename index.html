@@ -122,9 +122,22 @@
     </div>
 
     <!-- Top Center Challenge Banner -->
-    <div class="hud-challenge" aria-hidden="true">
-      <div class="hud-challenge-title">YOU THINK YOU BREAK THIS BULB WITH 3 HITS ?!</div>
-      <div class="hud-challenge-sub">try to move the lamp first for more challenge hehe</div>
+    <div class="hud-challenge">
+      <div class="hud-challenge-box">
+        <div class="hud-challenge-title">You think you can break this bulb with 3 hits in 5 shots?!</div>
+        <div class="hud-challenge-sub">try to move the lamp first for more challenge hehe</div>
+      </div>
+      <div class="hud-challenge-box hud-challenge-progress">
+        <div class="ch-row">
+          <span>hits: <b id="chHits">0/3</b></span>
+          <div class="ch-bar"><i id="chHitsBar"></i></div>
+        </div>
+        <div class="ch-row">
+          <span>shots: <b id="chShots">0/5</b></span>
+          <div class="ch-bar shots"><i id="chShotsBar"></i></div>
+        </div>
+        <div class="hud-challenge-msg" id="chMsg"></div>
+      </div>
     </div>
 
     <!-- Top Right Controls -->
@@ -165,6 +178,7 @@
   <script src="js/physics.js"></script>
   <script src="js/dust.js"></script>
   <script src="js/glass.js"></script>
+  <script src="js/challenge.js"></script>
   <script src="js/lighting.js"></script>
   <script src="js/desktop.js"></script>
   <script src="js/app.js"></script>
