@@ -106,6 +106,27 @@ window.PORTFOLIO_DATA = {
 
   projects: [
     {
+      id: "portfolio",
+      name: "MaheerOS — Interactive Developer Portfolio",
+      tagline: "A dark room with a physics-driven hanging lamp, a slingshot, and a draggable desktop OS that holds my projects, skills, and research.",
+      icon: "💡",
+      status: "Live / Deployed",
+      badge: "Creative Frontend & Interaction Design",
+      problem: "Wanted a portfolio that feels like exploring a space instead of scrolling a static page.",
+      solution: "Built a canvas-rendered room with a swinging lamp, dynamic lighting, and a slingshot, plus a windowed desktop environment with 12 apps for my work. Deployed publicly on Vercel.",
+      tech: ["JavaScript", "HTML5 Canvas", "Web Audio API", "CSS", "Vercel"],
+      features: [
+        "Physics-based hanging lamp with dynamic, volumetric-style lighting",
+        "Wall switch and slingshot you can aim and shoot at the room",
+        "Draggable multi-window desktop with a dock and 12 apps",
+        "Synthesized sound effects via the Web Audio API",
+        "Inspired by sharyap.com for the desktop icons and kamran.fyi/lamp for the bulb"
+      ],
+      learned: "Learned how to combine a custom physics loop and lighting on Canvas with a DOM-based window manager, and keep both responsive.",
+      github: "https://github.com/nihedevotee/maheer-portfolio",
+      demo: "https://maheer-portfolio-three.vercel.app/"
+    },
+    {
       id: "notebook",
       name: "Notebook — Web-Based Drawing Application",
       tagline: "A browser-based drawing tool with canvas rendering, Web Audio sound synthesis, and PDF export.",

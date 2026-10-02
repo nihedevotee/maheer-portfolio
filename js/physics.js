@@ -183,9 +183,6 @@ window.PhysicsEngine = (function () {
     } else {
       light.heat += 1;
       light.warm = 0.16;
-      if (light.heat > 4.4) {
-        light.popT = 0.14;
-      }
     }
 
     if (onStateChange) onStateChange();

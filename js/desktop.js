@@ -34,6 +34,7 @@ window.DesktopManager = (function () {
   function setupMainDesktopEvents() {
     document.querySelectorAll("[data-app]").forEach((btn) => {
       btn.addEventListener("click", () => {
+        if (!PhysicsEngine.light.on || PhysicsEngine.light.broken) return;
         const appId = btn.getAttribute("data-app");
         openApp(appId);
       });
