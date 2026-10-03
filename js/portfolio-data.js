@@ -137,6 +137,29 @@ window.PORTFOLIO_DATA = {
       demo: "https://maheer-portfolio-three.vercel.app/"
     },
     {
+      id: "friends-forever",
+      name: "Friends Forever — Multi-Friend University Routine Planner",
+      tagline: "Your classes. Your friends. One routine. A client-side planner for friend groups to compare schedules, find shared lectures, and see when everyone is free.",
+      icon: "👯",
+      status: "Live / Deployed",
+      badge: "Productivity & Student Tools",
+      problem: "Coordinating class routines, free slots, and exam dates across a group of friends meant juggling screenshots and spreadsheets.",
+      solution: "Built a vanilla JS planner that pulls the live university course catalog, lets each friend add their sections, and merges everything into one routine matrix with shared-class detection, clash checks, and free-time finder. Deployed publicly on Vercel.",
+      tech: ["JavaScript", "HTML5", "CSS3", "localStorage", "Vercel"],
+      features: [
+        "Live course catalog with search by course code, name, section, or faculty, cached for offline use",
+        "Multiple friend groups with accent colors and color-coded friends",
+        "Weekly routine matrix across 7 days and 7 time periods",
+        "Shared-class and same-time detection across friends",
+        "Routine, exam, and duplicate-course clash detection when adding a course",
+        "\"Who's Free?\" and \"Find Common Free Time\" across all 49 weekly slots",
+        "Group exam schedule, PNG export, and JSON backup/restore"
+      ],
+      learned: "Learned how to model overlapping time intervals (including multi-period labs) and keep a no-build, fully client-side app fast with cached remote data via using a json file with real time data.",
+      github: "https://github.com/nihedevotee/friends-forever-routine",
+      demo: "https://friends-forever-routine.vercel.app/"
+    },
+    {
       id: "notebook",
       name: "Notebook — Web-Based Drawing Application",
       tagline: "A browser-based drawing tool with canvas rendering, Web Audio sound synthesis, and PDF export.",
@@ -152,7 +175,7 @@ window.PORTFOLIO_DATA = {
         "One-click PDF export of drawings",
         "Deployed and publicly accessible on Vercel"
       ],
-      learned: "Learned how to work directly with the Canvas 2D API for real-time rendering, and how to integrate the Web Audio API for interactive sound.",
+      learned: "this is actually my first project and i was still exploring how websites and everything work and watched a yt video and tried to follow along.",
       github: "https://github.com/nihedevotee/Notebook",
       demo: "https://notebook-seven-omega.vercel.app"
     },
@@ -192,7 +215,7 @@ window.PORTFOLIO_DATA = {
         "Works across inputs, textareas, and contentEditable fields",
         "Lightweight Manifest V3 architecture"
       ],
-      learned: "Learned how Manifest V3 content scripts work, and how to track both pointer and text-caret positions reliably across arbitrary web pages.",
+      learned: "how to use extensions and make the normal tasks a bit fun and creative, this is also the first time i built something with chrome extension.",
       github: "https://github.com/nihedevotee/cursor-chrome-extension"
     },
     {
@@ -213,7 +236,7 @@ window.PORTFOLIO_DATA = {
         "Optional JPEG recompression (via Canvas + pdf-lib) to shrink oversized embedded images",
         "Zero uploads — every operation runs locally in the browser"
       ],
-      learned: "Learned how to manipulate PDF internals directly with pdf-lib — walking XObject resources to find and re-encode embedded JPEG streams — and how to keep a fully client-side file pipeline fast using the Canvas API and object URLs.",
+      learned: "learned that i can make pdf in my local system and no need to give info to the world via ilovepdf.",
       github: "https://github.com/nihedevotee/pdf-maker",
       demo: "https://pdf-maker-inky-theta.vercel.app"
     }

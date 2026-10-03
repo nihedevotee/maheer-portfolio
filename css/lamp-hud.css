@@ -396,3 +396,10 @@
   .hud-challenge { top: 64px; width: 80vw; font-size: 10px; }
   .hud-challenge-sub { font-size: 10px; }
 }
+.hud-challenge {
+  transition: opacity .25s ease;
+}
+body:has(#windowContainer > *) .hud-challenge {
+  opacity: 0;
+  pointer-events: none;
+}
