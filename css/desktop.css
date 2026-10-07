@@ -1094,3 +1094,60 @@
 .about-bullets { margin: 10px 0 14px; padding-left: 22px; }
 .about-bullets li { margin: 6px 0; line-height: 1.5; }
 .about-paragraphs a { color: var(--amber); }
+
+/* GitHub Achievements */
+.gh-achievements {
+  margin: 16px 0;
+}
+
+.gh-achievements h4 {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--amber);
+  margin: 0 0 10px;
+}
+
+.gh-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gh-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 104px;
+  padding: 12px 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.gh-badge:hover {
+  transform: translateY(-3px);
+  border-color: var(--amber);
+}
+
+.gh-badge img {
+  width: 64px;
+  height: 64px;
+}
+
+.gh-badge-name {
+  font-size: 12px;
+  color: rgba(236, 230, 218, 0.85);
+  text-align: center;
+}
+
+.gh-badge-name b {
+  color: var(--amber);
+}
+
+.gh-ach-empty {
+  font-size: 12.5px;
+  color: rgba(236, 230, 218, 0.6);
+}

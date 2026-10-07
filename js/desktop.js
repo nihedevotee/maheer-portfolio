@@ -357,6 +357,7 @@ window.DesktopManager = (function () {
     if (appId === "github") {
       const handle = (window.PORTFOLIO_DATA && window.PORTFOLIO_DATA.profile && window.PORTFOLIO_DATA.profile.handle) || "";
       if (handle) loadGitHubLiveStats(body, handle);
+      loadGitHubAchievements(body);
     }
 
     if (appId === "about") {
@@ -388,6 +389,41 @@ window.DesktopManager = (function () {
   // Cache of the live visit count once fetched, so re-opening the GitHub window
   // doesn't need to re-fetch (and doesn't count another visit).
   let cachedVisitCount = null;
+
+  // ---- GitHub achievements (live) ----
+  function renderAchievementBadges(list) {
+    if (!Array.isArray(list) || list.length === 0) {
+      return '<p class="gh-ach-empty">No achievements yet.</p>';
+    }
+    return list.map((a) => `
+      <a class="gh-badge" href="${a.url}" target="_blank" rel="noopener" title="${a.name}${a.tier ? " " + a.tier : ""}">
+        <img src="${a.image}" alt="${a.name}" loading="lazy" />
+        <span class="gh-badge-name">${a.name}${a.tier ? ` <b>${a.tier}</b>` : ""}</span>
+      </a>
+    `).join("");
+  }
+
+  let cachedAchievements = null;
+
+  // Pulls the current badge list from the /api/achievements serverless function
+  // (which reads the public GitHub profile). Falls back to the static list in
+  // portfolio-data.js if the endpoint is unreachable (e.g. file:// or local dev).
+  async function loadGitHubAchievements(scope) {
+    const box = scope.querySelector("#gh-achievements-list");
+    if (!box) return;
+    try {
+      if (!cachedAchievements) {
+        const res = await fetch("/api/achievements");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!Array.isArray(data.achievements)) throw new Error("Bad response shape");
+        cachedAchievements = data.achievements;
+      }
+      box.innerHTML = renderAchievementBadges(cachedAchievements);
+    } catch (err) {
+      console.warn("[MaheerOS] Live achievements unavailable, using fallback list. Reason:", err);
+    }
+  }
 
   // Fetch live GitHub stats (repos, followers, total stars) and patch them into the
   // given window's body element. Scoped to `scope` rather than document.getElementById
@@ -735,6 +771,13 @@ window.DesktopManager = (function () {
               <div class="gh-tile">
                 <div class="tile-number" id="gh-followers-count">12</div>
                 <div class="tile-label">Followers</div>
+              </div>
+            </div>
+
+            <div class="gh-achievements">
+              <h4>🏅 Achievements</h4>
+              <div class="gh-badges" id="gh-achievements-list">
+                ${renderAchievementBadges(p.githubAchievements)}
               </div>
             </div>
 

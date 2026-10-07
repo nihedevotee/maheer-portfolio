@@ -19,7 +19,11 @@ window.PORTFOLIO_DATA = {
     location: "Dhaka, Bangladesh",
     statusBadge: "🟢 Open to Internships & Collaborative Projects",
     bioShort: "Computer Science & Engineering student at BRAC University with a strong foundation in problem-solving and full-stack development. Active in competitive programming across Codeforces, CodeChef, and LeetCode, with hands-on experience building and shipping independent web applications.",
-    avatarEmoji: "🚀"
+    avatarEmoji: "🚀",
+    // Fallback shown instantly / if /api/achievements is unreachable. The live list overrides it.
+    githubAchievements: [
+      { slug: "pull-shark", name: "Pull Shark", tier: "", image: "https://github.githubassets.com/assets/pull-shark-default-498c279a747d.png", url: "https://github.com/nihedevotee?achievement=pull-shark&tab=achievements" }
+    ]
   },
 
   about: {
