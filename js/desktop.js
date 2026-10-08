@@ -658,7 +658,7 @@ window.DesktopManager = (function () {
                     ${cat.items.map((item) => `
                       <div class="skill-item">
                         <div class="skill-top">
-                          <span class="skill-name">${item.name}</span>
+                          <span class="skill-name">${item.img ? `<img class="skill-img" src="${item.img}" alt="" />` : ""}${item.name}</span>
                           <span class="skill-level">${item.level}</span>
                         </div>
                         <div class="skill-desc">${item.desc}</div>
@@ -837,7 +837,7 @@ window.DesktopManager = (function () {
             <div class="contact-channels-grid">
               ${(c.channels || []).map((ch) => `
                 <a href="${ch.url}" target="_blank" rel="noopener" class="contact-channel-card">
-                  <span class="channel-icon">${ch.icon}</span>
+                  <span class="channel-icon">${ch.img ? `<img class="channel-img" src="${ch.img}" alt="" />` : ch.icon}</span>
                   <div class="channel-info">
                     <strong>${ch.name}</strong>
                     <span>${ch.value}</span>

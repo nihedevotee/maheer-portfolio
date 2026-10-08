@@ -78,17 +78,17 @@ window.PORTFOLIO_DATA = {
         name: "Frontend Development",
         icon: "🎨",
         items: [
-          { name: "HTML", level: "Proficient", desc: "Semantic markup and accessible structure" },
-          { name: "CSS", level: "Proficient", desc: "Layout, responsive design, animation" },
-          { name: "JavaScript", level: "Proficient", desc: "DOM manipulation, Canvas rendering, Web Audio API" }
+          { name: "HTML", img: "assets/icons/html.svg", level: "Proficient", desc: "Semantic markup and accessible structure" },
+          { name: "CSS", img: "assets/icons/css.svg", level: "Proficient", desc: "Layout, responsive design, animation" },
+          { name: "JavaScript", img: "assets/icons/js.svg", level: "Proficient", desc: "DOM manipulation, Canvas rendering, Web Audio API" }
         ]
       },
       {
         name: "Backend Development",
         icon: "⚙️",
         items: [
-          { name: "PHP", level: "Intermediate", desc: "Server-side scripting and application logic" },
-          { name: "MySQL", level: "Intermediate", desc: "Relational database design and queries" }
+          { name: "PHP", img: "assets/icons/php.svg", level: "Intermediate", desc: "Server-side scripting and application logic" },
+          { name: "MySQL", img: "assets/icons/mysql.svg", level: "Intermediate", desc: "Relational database design and queries" }
         ]
       },
       {
@@ -320,7 +320,7 @@ window.PORTFOLIO_DATA = {
   contact: {
     pitch: "I am always excited to discuss new software projects, internship opportunities, research collaborations, or fascinating tech topics.",
     channels: [
-      { name: "Email", value: "younusmohammadmaheer123@gmail.com", url: "mailto:younusmohammadmaheer123@gmail.com", icon: "✉️" },
+      { name: "Email", value: "younusmohammadmaheer123@gmail.com", url: "mailto:younusmohammadmaheer123@gmail.com", icon: "✉️", img: "assets/icons/gmail.svg" },
       { name: "GitHub", value: "github.com/nihedevotee", url: "https://github.com/nihedevotee", icon: "🐙" },
       { name: "LinkedIn", value: "linkedin.com/in/younus-mohammadmaheer", url: "https://linkedin.com/in/younus-mohammadmaheer", icon: "💼" },
       { name: "Facebook", value: "facebook.com/younusmohammad.maheer", url: "https://www.facebook.com/younusmohammad.maheer", icon: "📘" }
