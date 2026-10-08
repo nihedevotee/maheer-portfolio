@@ -321,9 +321,9 @@ window.PORTFOLIO_DATA = {
     pitch: "I am always excited to discuss new software projects, internship opportunities, research collaborations, or fascinating tech topics.",
     channels: [
       { name: "Email", value: "younusmohammadmaheer123@gmail.com", url: "mailto:younusmohammadmaheer123@gmail.com", icon: "✉️", img: "assets/icons/gmail.svg" },
-      { name: "GitHub", value: "github.com/nihedevotee", url: "https://github.com/nihedevotee", icon: "🐙" },
-      { name: "LinkedIn", value: "linkedin.com/in/younus-mohammadmaheer", url: "https://linkedin.com/in/younus-mohammadmaheer", icon: "💼" },
-      { name: "Facebook", value: "facebook.com/younusmohammad.maheer", url: "https://www.facebook.com/younusmohammad.maheer", icon: "📘" }
+      { name: "GitHub", value: "github.com/nihedevotee", url: "https://github.com/nihedevotee", icon: "🐙", img: "assets/icons/github.svg" },
+      { name: "LinkedIn", value: "linkedin.com/in/younus-mohammadmaheer", url: "https://linkedin.com/in/younus-mohammadmaheer", icon: "💼", img: "assets/icons/linkedin.svg" },
+      { name: "Facebook", value: "facebook.com/younusmohammad.maheer", url: "https://www.facebook.com/younusmohammad.maheer", icon: "📘", img: "assets/icons/fb.svg" }
     ],
     responseTime: "Typically responds within 24 hours"
   }
